@@ -1,0 +1,74 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Матрасы", 
+		"about/howto/", 
+		Array(), 
+		Array("ICON"=>"1"), 
+		"" 
+	),
+	Array(
+		"Наматрасники", 
+		"about/delivery/", 
+		Array(), 
+		Array("ICON"=>"2"), 
+		"" 
+	),
+	Array(
+		"Подушки", 
+		"about/", 
+		Array(), 
+		Array("ICON"=>"3"), 
+		"" 
+	),
+	Array(
+		"Одеяла", 
+		"about/guaranty/", 
+		Array(), 
+		Array("ICON"=>"4"), 
+		"" 
+	),
+	Array(
+		"Белье", 
+		"about/contacts/", 
+		Array(), 
+		Array("ICON"=>"5"), 
+		"" 
+	),
+	Array(
+		"Пледы", 
+		"personal/", 
+		Array(), 
+		Array("ICON"=>"6"), 
+		"CUser::IsAuthorized()" 
+	),
+	Array(
+		"Для ванной", 
+		"", 
+		Array(), 
+		Array("ICON"=>"7"), 
+		"" 
+	),
+	Array(
+		"Для кухни", 
+		"", 
+		Array(), 
+		Array("ICON"=>"8"), 
+		"" 
+	),
+	Array(
+		"Мебель", 
+		"", 
+		Array(), 
+		Array("ICON"=>"9"), 
+		"" 
+	),
+	Array(
+		"Распродажа", 
+		"", 
+		Array(), 
+		Array("ICON"=>"10"), 
+		"" 
+	)
+);
+?>
