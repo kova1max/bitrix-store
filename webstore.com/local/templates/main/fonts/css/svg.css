@@ -1,0 +1,208 @@
+@font-face {
+	font-family: 'icon';
+	src: url('../fonts/icon.eot?pn3t59');
+	src: url('../fonts/icon.eot?pn3t59#iefix') format('embedded-opentype'), url('../fonts/icon.ttf?pn3t59') format('truetype'), url('../fonts/icon.woff?pn3t59') format('woff'), url('../fonts/icon.svg?pn3t59#icon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="svg-"],
+[class*=" svg-"] {
+	font-family: 'icon' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.svg-menu-10:before {
+	content: "\e906";
+}
+
+.svg-menu-9:before {
+	content: "\e907";
+}
+
+.svg-menu-8:before {
+	content: "\e908";
+}
+
+.svg-menu-7:before {
+	content: "\e909";
+}
+
+.svg-menu-6:before {
+	content: "\e90a";
+}
+
+.svg-menu-5:before {
+	content: "\e90b";
+}
+
+.svg-menu-4:before {
+	content: "\e90c";
+}
+
+.svg-menu-3:before {
+	content: "\e90d";
+}
+
+.svg-menu-2:before {
+	content: "\e90e";
+}
+
+.svg-menu-1:before {
+	content: "\e90f";
+}
+
+.svg-star-o:before {
+	content: "\e913";
+}
+
+.svg-star:before {
+	content: "\e914";
+}
+
+.svg-arrow:before {
+	content: "\e915";
+}
+
+.svg-loss:before {
+	content: "\e916";
+}
+
+.svg-next-2:before {
+	content: "\e917";
+}
+
+.svg-basket:before {
+	content: "\e918";
+}
+
+.svg-bars-graphic:before {
+	content: "\e919";
+}
+
+.svg-cancel:before {
+	content: "\e91a";
+}
+
+.svg-cancel-o:before {
+	content: "\e91b";
+}
+
+.svg-file-audio:before {
+	content: "\e91c";
+}
+
+.svg-file:before {
+	content: "\e91d";
+}
+
+.svg-fit-to-height:before {
+	content: "\e91e";
+}
+
+.svg-next:before {
+	content: "\e91f";
+}
+
+.svg-plus:before {
+	content: "\e920";
+}
+
+.svg-heart2:before {
+	content: "\e921";
+}
+
+.svg-heart:before {
+	content: "\e922";
+}
+
+.svg-add-like:before {
+	content: "\e923";
+}
+
+.svg-check:before {
+	content: "\e924";
+}
+
+.svg-avatar:before {
+	content: "\e925";
+}
+
+.svg-calendar:before {
+	content: "\e926";
+}
+
+.svg-phone:before {
+	content: "\e927";
+}
+
+.svg-glass:before {
+	content: "\e928";
+}
+
+.svg-basket-o:before {
+	content: "\e929";
+}
+
+.svg-pieces:before {
+	content: "\e92a";
+}
+
+.svg-cash:before {
+	content: "\e92b";
+}
+
+.svg-like:before {
+	content: "\e92c";
+}
+
+.svg-delivery:before {
+	content: "\e92d";
+}
+
+.svg-home:before {
+	content: "\e92e";
+}
+
+.svg-developer:before {
+	content: "\e910";
+}
+
+.svg-parameters_1:before {
+	content: "\e900";
+}
+
+.svg-parameters_2:before {
+	content: "\e901";
+}
+
+.svg-parameters_4:before {
+	content: "\e904";
+}
+
+.svg-parameters_5:before {
+	content: "\e905";
+}
+
+.svg-parameters_6:before {
+	content: "\e92f";
+}
+
+.svg-parameters_3:before {
+	content: "\e902";
+}
+
+.svg-list:before {
+	content: "\e911";
+}
+
+.svg-question:before {
+	content: "\e903";
+}

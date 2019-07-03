@@ -1,0 +1,14 @@
+<? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+
+/**
+ * @var CBitrixComponentTemplate $this
+ * @var CatalogElementComponent $component
+ */
+
+$component = $this->getComponent();
+$arParams = $component->applyTemplateModifications();
+
+
+$asdCustom = [1,2,3,4,5];
+
+?>

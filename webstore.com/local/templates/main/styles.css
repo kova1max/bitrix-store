@@ -1,0 +1,10 @@
+.rating-item:hover {
+ cursor: pointer;
+}
+
+
+.favorites-active {
+    color: red!important;
+    border: 2px solid red!important;
+    font-weight: bold!important;
+}

@@ -1,0 +1,31 @@
+<?
+$MESS["ACTIVE_CODE"] = "Активувати промо код?";
+$MESS["ALL_PRICE"] = "Загальна вартість замовлення";
+$MESS["AUTHORIZE"] = "авторизуйтесь";
+$MESS["CANCEL"] = "Скасування";
+$MESS["CHOZE_DELIVERY"] = "Виберіть спосіб доставки";
+$MESS["CHOZE_PAY_SYSTEM"] = "Оберіть спосіб оплати";
+$MESS["CONFIRM_ORDER"] = "Підтвердити замовлення";
+$MESS["COUPON_TITLE"] = "Код купона для знижки";
+$MESS["DELIVERY"] = "Доставка:";
+$MESS["DELIVERY_ADRESS"] = "Адреса доставки:";
+$MESS["DELIVERY_PAY"] = "Вартість доставки:";
+$MESS["DELIVERY_PRICE"] = "Вартість доставки";
+$MESS["ITEMS_PRICE"] = "Товарів на суму";
+$MESS["MAKE_ORDER"] = "Оформлення замовлення";
+$MESS["MAKE_ORDER2"] = "Оформити замовлення";
+$MESS["OR"] = "або";
+$MESS["ORDER_ITEMS"] = "Вміст вашого замовлення";
+$MESS["ORDER_NUMBER"] = "Номер вашого замовлення: ";
+$MESS["ORDER_TITLE"] = "Перевірте правильність замовлення і вибраної опції";
+$MESS["ORDER_WILL_BE_MAKED_SOON"] = "Замовлення буде оброблено найближчим часом.";
+$MESS["PAY"] = "Оплатити";
+$MESS["PAYMENT"] = "Оплата:";
+$MESS["PAYMENT_SUMM"] = "Сума до оплати за рахунком:";
+$MESS["PERSONAL_CABINET"] = "Персональному розділі сайту.";
+$MESS["RECALC_COUPON"] = "Перерахувати";
+$MESS["RECIEVER"] = "Одержувач:";
+$MESS["SAY_ABOUT_U"] = "Заповніть інформацію про себе";
+$MESS["THANK_FOR_U_ORDER"] = "Дякую за ваше замовлення!";
+$MESS["U_CAN_SEE"] = "Ви можете слідкувати за виконанням свого замовлення в";
+?>
