@@ -3,6 +3,12 @@
     $APPLICATION->SetTitle("TEST PAGE");
 ?>
 
+<?
+echo '<pre>';
+print_r('SOME TEXT');
+echo '<pre>';
+?>
+
 <?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.smart.filter",
 	".custom_smrtfilter",
