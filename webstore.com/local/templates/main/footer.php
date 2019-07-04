@@ -82,6 +82,11 @@ IncludeTemplateLangFile(__FILE__);
 	<script src="<?=SITE_TEMPLATE_PATH?>/bower_components/fancyBox/source/jquery.fancybox.js"></script>
 	<script src="<?=SITE_TEMPLATE_PATH?>/js/jquery.cookie.js"></script>
 	<script src="<?=SITE_TEMPLATE_PATH?>/js/main.js"></script>
+	<?if(!$noTitle){?>
+	<script>
+		$('.h-title').remove();
+	</script>
+	<?}?>
 
 </body>
 

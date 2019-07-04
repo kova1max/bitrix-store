@@ -143,7 +143,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 							<button type="submit" class="header_search_btn"><i class="svg-glass"></i><span>Поиск</span></button>
 						</form>
 					</div>
-					<a href="#" class="header_item header_comparison">
+					<a href="/catalog/compare.php" class="header_item header_comparison">
 						<?if($compareCount > 0) {?>
 							<span class="header_item_icon" style="background-color: #fc6419;">
 								<i class="svg-list" style="color: white;"></i>
@@ -158,8 +158,6 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 							<span>В сравнении:</span>
 							<strong><?=$compareCount?> товаров.</strong>
 						</span>
-
-						
 					</a>
 
 					<a href="/personal/order/make/" class="header_item header_basket active">
@@ -224,7 +222,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 				);
 			?>
 			<?if(!$noTitle){?>
-				<h1><?$APPLICATION->ShowTitle();?></h1>
+				<h1 class="h-title"><?$APPLICATION->ShowTitle();?></h1>
 			<?}?>
 		</div>
 	<? } ?>

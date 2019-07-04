@@ -1,11 +1,6 @@
 <?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Главная страница");
-
-echo '<pre>';
-print_r('HELLO WORLD');
-echo '<pre>';
-
+	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+	$APPLICATION->SetTitle("Главная страница");
 ?>
 
 <div class="slider">
