@@ -3,10 +3,6 @@
     $APPLICATION->SetTitle("TEST PAGE");
 ?>
 
-<?echo '<pre>';
-print_r('JELLO WORLD');
-echo '<pre>';?>
-
 <?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.smart.filter",
 	".custom_smrtfilter",
