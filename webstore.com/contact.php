@@ -52,10 +52,6 @@ $APPLICATION->SetTitle("Контакты");
 						</div>
 					</div>
 
-					<?print_r('<pre>');
-					print_r($asd);
-					print_r('</pre>')?>
-
 					<div class="contact_item">
 						<div class="header_item header_basket flex">
 							<span class="social">
