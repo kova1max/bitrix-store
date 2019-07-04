@@ -1,7 +1,13 @@
 <?php 
     require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
     $APPLICATION->SetTitle("TEST PAGE");
-?><?$APPLICATION->IncludeComponent(
+?>
+
+<?echo '<pre>';
+print_r('JELLO WORLD');
+echo '<pre>';?>
+
+<?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.smart.filter",
 	".custom_smrtfilter",
 	Array(
