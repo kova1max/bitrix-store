@@ -52,7 +52,7 @@ $this->setFrameMode(true);
 				</div>	
 				<div class="product_item_price"><?= $arItem['OFFERS'][0]['PRICES']['BASE']['PRINT_VALUE'] ?></div>
 				<div class="product_item_bottom">
-					<a href="<?= $arItem['OFFERS'][0]['COMPARE_URL'] ?>" class="fancymodal product_item_comparison"><i class="svg-list"></i></a>
+					<a href="123<?= $arItem['OFFERS'][0]['COMPARE_URL'] ?>" class="fancymodal product_item_comparison"><i class="svg-list"></i></a>
 					<a href="<?= $arItem['OFFERS'][0]['ADD_URL'] ?>" class="fancymodal btn product_item_btn"><i class="svg-basket"></i> В корзину</a>
 				</div>
 			</div>

@@ -156,7 +156,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 						
 						<span class="header_item_content">
 							<span>В сравнении:</span>
-							<strong><?=$compareCount?> товаров.</strong>
+							<strong><?=$compareCount?> товар(ов).</strong>
 						</span>
 					</a>
 
