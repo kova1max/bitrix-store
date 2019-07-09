@@ -1,6 +1,8 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
+
+// FIXME: СКРЫТОЕ СВОЙСТВО [СHECKED] ПОД ("Показать еще") НЕ ПОЯВЛЯЕТСЯ 
 ?>
 
 <form class="filter" name="<? echo $arResult["FILTER_NAME"] . "_form" ?>" action="<? echo $arResult["FORM_ACTION"] ?>" method="get">

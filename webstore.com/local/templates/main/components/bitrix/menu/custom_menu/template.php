@@ -3,6 +3,8 @@ global	$PARAMS;
 		$IBlock = 14;
 ?>
 
+<!-- FIXME: БАГ ІКОНОК ТА ЛІНКІВ -->
+
 <?if((CModule::IncludeModule("iblock")) && (!empty($arResult))):?>
 	<div class="menu">
 		<div class="container">

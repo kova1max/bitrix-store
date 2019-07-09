@@ -54,8 +54,8 @@ foreach($arResult['ITEMS'] as $id => $arItem){
 				<a href="#" class="add_model product_item_title">Добавить<br> еще 1 модель</a>
 				<div class="cart_tabs">
 					<div class="cart_tabs_nav">
-						<a class="compare_all" href="?DIFFERENT=N" data-tabs="1" class="active">Все<br> характеристики</a>
-						<a class="compare_different" href="?DIFFERENT=Y" data-tabs="2">Только отличия</a>
+						<a class="compare_link compare_all" href="?DIFFERENT=N" data-tabs="1" class="active">Все<br> характеристики</a>
+						<a class="compare_link compare_different" href="?DIFFERENT=Y" data-tabs="2">Только отличия</a>
 					</div>
 					<div class="cart_content">
 						<div class="cart_tabs_content">

@@ -4,6 +4,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
 $selectVal = "";
 
+// FIXME: СКРЫТОЕ СВОЙСТВО [СHECKED] ПОД ("Показать еще") НЕ ПОЯВЛЯЕТСЯ 
 ?>
 
 <form style="display: none;" data-section="<?=$arParams['SECTION_ID']?>" class="slider_form_content" name="<? echo $arResult["FILTER_NAME"] . "_form" ?>" action="<? echo $arParams["FORM_ACTION"] ?>" method="get">

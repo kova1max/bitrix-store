@@ -221,8 +221,8 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 					false
 				);
 			?>
-			<?if(!$noTitle){?>
-				<h1 class="h-title"><?$APPLICATION->ShowTitle();?></h1>
-			<?}?>
+
+			<!-- FIXME: Title иногда не показывается -->
+			<h1 class="h-title"><?$APPLICATION->ShowTitle();?></h1>
 		</div>
 	<? } ?>

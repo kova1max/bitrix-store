@@ -14,11 +14,9 @@ function submitForm(form, type = false){
 
 }
 
-$('.cart_tabs_nav').find('a').on('click', function(){
-    window.location.href = this.search;
-})
-
 $(document).ready(function(){
+
+    $($('.slider_form_content')[0]).css('display', 'block');
 
     $('a.compare_all').addClass('active');
 
@@ -485,13 +483,14 @@ $(function() {
     });
 
 
-    $('.cart_tabs_nav a').click(function(e) {
+    $('.cart_tabs_nav compare_link').click(function(e) {
         e.preventDefault();
         var $this = $(this),
             item = $this.data('tabs'),
             container = $this.closest('.cart_tabs');
         $this.addClass('active').siblings().removeClass('active');
         container.find('.cart_tabs_item[data-tabs="' + item + '"]').addClass('active').siblings().removeClass('active');
+        window.location.href = this.search;
     });
 
     $('.filter_item_more').click(function(e) {
