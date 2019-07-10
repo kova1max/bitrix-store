@@ -14,6 +14,15 @@ function submitForm(form, type = false){
 
 }
 
+$('.news_tabs_nav a').click(function (e) {
+    e.preventDefault();
+    var $this= $(this),
+    item = $this.data('tabs'),
+    container = $this.closest('.cart_tabs');
+    $this.addClass('active').siblings().removeClass('active');
+    container.find('.cart_tabs_item[data-tabs="' + item + '"]').addClass('active').siblings().removeClass('active');
+});
+
 $(document).ready(function(){
 
     $($('.slider_form_content')[0]).css('display', 'block');

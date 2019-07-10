@@ -22,8 +22,8 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Статьи", 
-		"reviews.php", 
+		"Новости", 
+		"news/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -43,8 +43,8 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Новости", 
-		"news.php", 
+		"Статьи", 
+		"news/?TAB=3", 
 		Array(), 
 		Array(), 
 		"" 
@@ -52,6 +52,13 @@ $aMenuLinks = Array(
 	Array(
 		"Контакты", 
 		"contact.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"TEST", 
+		"test.php", 
 		Array(), 
 		Array(), 
 		"" 
