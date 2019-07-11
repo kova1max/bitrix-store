@@ -244,11 +244,11 @@ $rat = array();
 
 <?endif;?>
 
-
 <?
 	for($i = 0; $i < count($rat); $i++ ){
 		$result += $rat[$i];
 	}
 	$cr = $result / count($rat);
 	setcookie('comments_rating', round($cr));
+	setcookie('comments_count', count($arResult['CommentsResult'][0]));
 ?>

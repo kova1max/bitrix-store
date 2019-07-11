@@ -15,14 +15,6 @@ use \Bitrix\Main\Localization\Loc;
 
 $this->setFrameMode(true);
 
-// FANCYBOX ELEMENTS
-
-$GLOBALS['FANCYBOXES'] = array(
-	'favorites' => SITE_TEMPLATE_PATH . '/fancy/' . 'favorites.php',
-	'fast_buy' => SITE_TEMPLATE_PATH . '/fancy/' . 'fast_buy.php',
-	'compare_list' => SITE_TEMPLATE_PATH . '/fancy/' . 'compare_list.php'
-);
-
 // GETTING HIGH LOAD PROPS
 
 $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(18)->fetch();

@@ -7,7 +7,6 @@ $i = 1;
 while($arSection = $rsSection->GetNext()){
     $arResult['SECTIONS'][$arSection['ID']] = array(
         'ID' => $arSection['ID'],
-        'LIST_PAGE_URL'=>$arSection['LIST_PAGE_URL'],
         'SECTION_PAGE_URL' => $arSection['SECTION_PAGE_URL'],
         'NAME' => $arSection['NAME'],
         'ELEMENT_CNT' => $arSection['ELEMENT_CNT'],
@@ -44,10 +43,8 @@ foreach($arResult['SECTIONS'] as $id => $SEC) {
 
 }
 
-$first_section=reset($arResult['SECTIONS']);
-
-if( $APPLICATION->GetCurDir() == $first_section['LIST_PAGE_URL'] ) {
-    LocalRedirect($first_section['SECTION_PAGE_URL']);
+if( $APPLICATION->sDirPath == "/news/" ) {
+    $_REQUEST['SECTION'] = '/news/novosti/';
 } else {
     preg_match('~/[a-z]+/[a-z]+[/]~', $APPLICATION->sDirPath, $_REQUEST['SECTION']);
 

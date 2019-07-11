@@ -17,9 +17,6 @@ $this->setFrameMode(true);
 
 ?>
 
-<?
-?>
-
 <div class="container">
 	<h1>Новости, статьи и обзоры</h1>
 	<div class="catalog novosti">
@@ -28,22 +25,20 @@ $this->setFrameMode(true);
 		<form class="filter">
 
 			<?foreach($arResult['SECTIONS'] as $arItem) {?>
-			<?if($arItem['DEPTH_LEVEL'] == 1){?>
-			<div class="filter_head"><?= $arItem['NAME'] ?> (<?= $arItem['ELEMENT_CNT'] ?>)</div>
-			<div class="filter_item">
+				<?if($arItem['DEPTH_LEVEL'] == 1){?>
+					<div class="filter_head"><?= $arItem['NAME'] ?> (<?= $arItem['ELEMENT_CNT'] ?>)</div>
+					<div class="filter_item">
 
-				<?foreach($arResult['SECTIONS'] as $arSection) {?>
+						<?foreach($arResult['SECTIONS'] as $arSection) {?>
+							<?foreach($arItem['CHILDREN'] as $child) {?>
+								<?if($child['ID'] == $arSection['ID']){?>
 
-				<?foreach($arItem['CHILDREN'] as $child) {?>
+									<a href="<?= $arSection['SECTION_PAGE_URL'] ?>"><?= $arSection['NAME'] ?> <span>(<?= $arSection['ELEMENT_CNT'] ?>)</span></a>
 
-					<?if($child['ID'] == $arSection['ID']){?>
-
-						<a href="<?= $arSection['SECTION_PAGE_URL'] ?>"><?= $arSection['NAME'] ?> <span>(<?= $arSection['ELEMENT_CNT'] ?>)</span></a>
-
-					<?}?>
-				<?}}?>
-			</div>
-			<?}?>
+								<?}?>
+						<?}	}?>
+					</div>
+				<?}?>
 			<?}?>
 
 		</form>
@@ -55,8 +50,9 @@ $this->setFrameMode(true);
 			<div class="cart_tabs">
 				<div class="cart_tabs_nav news_tabs_nav">
 					<?foreach($arResult['SECTIONS'] as $arSection) {
+						
 						if($arSection['TAB_ID']) {?>
-							<a href="#" data-tabs="<?=$arSection['TAB_ID']?>" <?echo $arSection['TAB_ID'] == $_REQUEST['TAB'] ? 'class="active"' : '' ?>><?= $arSection['NAME'] ?></a>
+							<a href="<?echo $arSection['ELEMENT_CNT'] < 1 ? '' : $arSection['SECTION_PAGE_URL'] ?>" data-tabs="<?=$arSection['TAB_ID']?>" <?echo $arSection['ELEMENT_CNT'] < 1 ? 'style="color:#989898" data-disabled="true"' : '' ?> <?echo $_REQUEST['SECTION'][0] == $arSection['SECTION_PAGE_URL'] ? 'class="active"' : '' ?>><?= $arSection['NAME'] ?></a>
 					<?}}?>
 				</div>
 
@@ -67,7 +63,7 @@ $this->setFrameMode(true);
 						<?foreach($arResult['SECTIONS'] as $arSection) {?>
 							<?if($arSection['TAB_ID']) {?>
 
-								<div class="cart_tabs_item <?echo $arSection['TAB_ID'] == $_REQUEST['TAB'] ? 'active' : ''?>" data-tabs="<?= $arSection['TAB_ID'] ?>">
+								<div class="cart_tabs_item <?echo $_REQUEST['SECTION'][0] == $arSection['SECTION_PAGE_URL'] ? 'active' : '' ?>" data-tabs="<?= $arSection['TAB_ID'] ?>">
 									
 
 									<?$i = 0;?>
@@ -80,7 +76,9 @@ $this->setFrameMode(true);
 													$time = new DateTime($arItem['TIMESTAMP_X']);
 												?>
 
-												<h3 class="novosti_title"><?= $arChild['NAME'] ?></h3>
+												<?if($i == 0) {?>
+													<h3 class="novosti_title"><?= $arChild['NAME'] ?></h3>
+												<?}?>
 
 												<div class="novosti_item_first <?echo $i != 0 ? 'second' : ''?> clearfix">
 													<div class="novosti_img_wrap">
@@ -99,10 +97,11 @@ $this->setFrameMode(true);
 												</div>
 
 											<?
-												$i++;
+												
 											}
 										}
-									}?>
+										$i++;
+									}$i=0;?>
 
 									<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
 										<?=$arResult["NAV_STRING"]?>

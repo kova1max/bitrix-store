@@ -54,6 +54,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 <head>
 	<title><? $APPLICATION->ShowTitle() ?></title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/chosen/chosen.css" />
 	<? $APPLICATION->ShowHead(); ?>
 
 	<link rel="shortcut icon" href="<?= SITE_TEMPLATE_PATH ?>/img/favicon/favicon.ico" type="image/x-icon">
@@ -63,7 +64,6 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 
 	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/normalize-css/normalize.css" />
 	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/swiper/dist/css/swiper.css" />
-	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/chosen/chosen.css" />
 	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/nouislider/distribute/nouislider.min.css" />
 	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/fancyBox/source/jquery.fancybox.css" />
 	<link rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/bower_components/tooltip/dist/tooltip.css">

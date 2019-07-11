@@ -1,9 +1,12 @@
 <?
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
-$this->setFrameMode(true);
+	if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+	$this->setFrameMode(true);
 
-// FIXME: СКРЫТОЕ СВОЙСТВО [СHECKED] ПОД ("Показать еще") НЕ ПОЯВЛЯЕТСЯ 
+	if($arParams['INCLUDE_TEMPLATE'] !== false) { 
 ?>
+
+
+
 
 <form class="filter" name="<? echo $arResult["FILTER_NAME"] . "_form" ?>" action="<? echo $arResult["FORM_ACTION"] ?>" method="get">
 
@@ -106,3 +109,5 @@ $this->setFrameMode(true);
 
 		</form>
 	</div>
+
+<?}?>
