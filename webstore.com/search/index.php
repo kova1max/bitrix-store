@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("Поиск");
 
 <?$APPLICATION->IncludeComponent(
 	"bitrix:search.page", 
-	".default", 
+	"custom-search", 
 	array(
 		"RESTART" => "N",
 		"CHECK_DATES" => "N",
@@ -49,7 +49,7 @@ $APPLICATION->SetTitle("Поиск");
 		"SHOW_ORDER_BY" => "N",
 		"SHOW_TAGS_CLOUD" => "N",
 		"AJAX_OPTION_ADDITIONAL" => "",
-		"COMPONENT_TEMPLATE" => ".default",
+		"COMPONENT_TEMPLATE" => "custom-search",
 		"NO_WORD_LOGIC" => "N",
 		"FILTER_NAME" => "",
 		"USE_LANGUAGE_GUESS" => "Y",

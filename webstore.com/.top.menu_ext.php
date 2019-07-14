@@ -3,47 +3,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 global $APPLICATION;
 
-$APPLICATION->IncludeComponent(
-	"bitrix:catalog.smart.filter",
-	".custom_smrtfilter",
-	Array(
-		"CACHE_GROUPS" => "N",
-		"CACHE_TIME" => "360000",
-		"CACHE_TYPE" => "A",
-		"CONVERT_CURRENCY" => "N",
-		"CURRENCY_ID" => $arParams['CURRENCY_ID'],
-		"DISPLAY_ELEMENT_COUNT" => "N",
-		"FILTER_NAME" => "",
-		"FILTER_VIEW_MODE" => $arParams["FILTER_VIEW_MODE"],
-		"GET_RESULT" => true,
-		"HIDE_NOT_AVAILABLE" => "N",
-		"IBLOCK_ID" => "14",
-		"IBLOCK_TYPE" => "catalog",
-		"INCLUDE_TEMPLATE" => false,
-		"INSTANT_RELOAD" => $arParams["INSTANT_RELOAD"],
-		"PAGER_PARAMS_NAME" => "",
-		"PREFILTER_NAME" => "smartPreFilter",
-		"PRICE_CODE" => array("BASE"),
-		"SAVE_IN_SESSION" => "N",
-		"SECTION_CODE" => "",
-		"SECTION_CODE_PATH" => "",
-		"SECTION_DESCRIPTION" => "DESCRIPTION",
-		"SECTION_ID" => 36,
-		"SECTION_TITLE" => "NAME",
-		"SEF_MODE" => "N",
-		"SEF_RULE" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["smart_filter"],
-		"SMART_FILTER_PATH" => $arResult["VARIABLES"]["SMART_FILTER_PATH"],
-		"TEMPLATE_THEME" => "",
-		"XML_EXPORT" => "N"
-	),
-$component,
-Array(
-	'HIDE_ICONS' => 'Y'
-)
-);
-
-global $sub_menu;
-
 $aMenuLinksExt = array();
 
 $obCache = new CPHPCache();
@@ -87,44 +46,85 @@ if ($obCache->InitCache('600', $cache_id, $cache_path)) {
 					array("ID", "NAME", "SECTION_PAGE_URL", "DEPTH_LEVEL", 'UF_ROLE', "UF_ICON", "SORT")
 				);
 
-				
+				$key = 0;
 				while ($ob = $res->GetNext()) {
 
-					// $res_array['FILTERED'][$key_sec] = array(
-					// 	0 => $ob['NAME'],
-					// 	1 => $ob['SECTION_PAGE_URL'],
-					// 	3 => array(
-					// 		'IS_PARRENT' => '1',
-					// 		'DEPTH_LEVEL' => $ob['ELEMENT_CNT'] > 0 ? 1 : 2,
-					// 		'FROM_IBLOCK' => '1',
-					// 		'ELEMENT_CNT' => $ob['ELEMENT_CNT'],
-					// 		'UF_ROLE' => $ob['UF_ROLE'],
-					// 		'UF_ICON' => $ob['UF_ICON'],
-					// 		'SORT' => $ob['SORT']
-					// 	)
-					// );
+					$APPLICATION->IncludeComponent(
+						"bitrix:catalog.smart.filter",
+						".custom_smrtfilter",
+						Array(
+							"CACHE_GROUPS" => "N",
+							"CACHE_TIME" => "360000",
+							"CACHE_TYPE" => "A",
+							"CONVERT_CURRENCY" => "N",
+							"CURRENCY_ID" => $arParams['CURRENCY_ID'],
+							"DISPLAY_ELEMENT_COUNT" => "N",
+							"FILTER_NAME" => "",
+							"FILTER_VIEW_MODE" => $arParams["FILTER_VIEW_MODE"],
+							"GET_RESULT" => true,
+							"HIDE_NOT_AVAILABLE" => "N",
+							"IBLOCK_ID" => "14",
+							"IBLOCK_TYPE" => "catalog",
+							"INCLUDE_TEMPLATE" => false,
+							"INSTANT_RELOAD" => $arParams["INSTANT_RELOAD"],
+							"PAGER_PARAMS_NAME" => "",
+							"PREFILTER_NAME" => "smartPreFilter",
+							"PRICE_CODE" => array("BASE"),
+							"SAVE_IN_SESSION" => "N",
+							"SECTION_CODE" => "",
+							"SECTION_CODE_PATH" => "",
+							"SECTION_DESCRIPTION" => "DESCRIPTION",
+							"SECTION_ID" => $ob['ID'],
+							"SECTION_TITLE" => "NAME",
+							"SEF_MODE" => "N",
+							"SEF_RULE" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["smart_filter"],
+							"SMART_FILTER_PATH" => $arResult["VARIABLES"]["SMART_FILTER_PATH"],
+							"TEMPLATE_THEME" => "",
+							"XML_EXPORT" => "N"
+						),
+						$component,
+						Array('HIDE_ICONS' => 'Y')
+					);
+					global $sub_menu;
 
 					foreach ($sub_menu as $key => $arItem) {
 						
-						$res_array[$key] = array(
+						$temp[$key] = array(
 							'NAME' => $arItem['NAME'],
-							'PROPERTY_TYPE'=> $arItem['PROPERTY_TYPE'],
-							'IS_PARRENT' => 1,
-							'DEPTH_LEVEL' => 2,
-
+							'DEPTH_LEVEL' => count($arItem['VALUES']) > 0 ? 2 : 1
 						);
 					
 						foreach ($arItem['VALUES'] as $arLabel) {
-							$res_array[$key]['VALUES'][] = array(
-								'NAME'=>$arLabel['VALUE'],
-								'HREF'=>$arResult['FORM_ACTION'].'filter/'. strtolower($arItem['CODE']) .'-is-'.$arLabel['URL_ID'].'/apply/',
-								'IS_PARRENT' => 0,
-								'DEPTH_LEVEL' => 3
+							$temp[$key]['VALUES'][] = array(
+								'NAME' => $arLabel['VALUE'],
+								'LINK' => '/catalog/' . $ob['ID'] . '/filter/'. strtolower($arItem['CODE']) .'-is-'.$arLabel['URL_ID'].'/apply/'
 							);
-						}
-					}
+						};
 
-					$key_sec++;
+
+					};
+
+					$url = parse_url($ob['SECTION_PAGE_URL'])['query'];
+					parse_str($url, $url);
+
+					$res_array[$id_key] = array(
+						0 => $ob['NAME'],
+						1 => '/catalog/' . $ob['ID'] . '/',
+						3 => array(
+							'IS_PARRENT' => '1',
+							'DEPTH_LEVEL' => $ob['ELEMENT_CNT'] > 0 ? 2 : 1,
+							'FROM_IBLOCK' => '1',
+							'ELEMENT_CNT' => $ob['ELEMENT_CNT'],
+							'UF_ROLE' => $ob['UF_ROLE'],
+							'SORT' => $ob['SORT'],
+							'URL' => '/catalog/'.$url['SECTION_ID'].'/',
+							'ID' => $ob['ID'],
+							'ICON' => $ob['UF_ICON'],
+							'ITEMS' => $temp
+						)
+					);
+ 
+					$id_key++;
 				}
 
 
@@ -163,13 +163,7 @@ if ($obCache->InitCache('600', $cache_id, $cache_path)) {
 	}
 }
 
+if($res_array['BASE']) unset($res_array['BASE']);
+
 $aMenuLinksExt = $res_array;
-
 $aMenuLinks = array_merge($aMenuLinks, $aMenuLinksExt);
-
-if($res_array['BASE'])
-	unset($res_array['BASE']);
-
-$arResult['FILTERED'] = $res_array;
-
-

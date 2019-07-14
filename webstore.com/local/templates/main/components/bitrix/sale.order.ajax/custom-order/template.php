@@ -54,10 +54,6 @@ else {
 		break;
 	}
 	?>
-	
-	
-
-	<? if($_REQUEST['ajax_request']=='y') $APPLICATION->RestartBuffer(); ?>
 
 	<div class="container" <?if($_REQUEST['ajax_request'] == 0) echo 'style="margin-top: 20px"'?>>
 
@@ -149,7 +145,5 @@ else {
 		</div>
 
 	</div>
-
-	<? if($_REQUEST['ajax_request']=='y') die; ?>
 
 </form>

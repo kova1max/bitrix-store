@@ -1,7 +1,5 @@
 <?
 	define("HIDE_SIDEBAR", true);
-
-	$noTitle = true;
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
