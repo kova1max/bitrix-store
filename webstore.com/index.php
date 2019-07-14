@@ -44,6 +44,7 @@
 	"bitrix:catalog.section",
 	"main_section",
 	Array(
+		"PROD_STATUS" => "hit_prodazh",
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
 		"ADD_PROPERTIES_TO_BASKET" => "N",
@@ -188,6 +189,7 @@ $component
 	"bitrix:catalog.section",
 	"main_section",
 	Array(
+		"PROD_STATUS" => "product_item_discount",
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
 		"ADD_PROPERTIES_TO_BASKET" => "N",
@@ -220,7 +222,7 @@ $component
 		"DISPLAY_BOTTOM_PAGER" => "N",
 		"DISPLAY_COMPARE" => "N",
 		"DISPLAY_TOP_PAGER" => "N",
-		"DIV_TYPE" => "product_list",
+		"DIV_TYPE" => "catalog_list",
 		"ELEMENT_SORT_FIELD" => "name",
 		"ELEMENT_SORT_FIELD2" => "timestamp_x",
 		"ELEMENT_SORT_ORDER" => "desc",
@@ -332,6 +334,7 @@ $component
 	"bitrix:catalog.section",
 	"main_section",
 	Array(
+		"PROD_STATUS" => "product_item_new",
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
 		"ADD_PROPERTIES_TO_BASKET" => "N",
@@ -364,7 +367,7 @@ $component
 		"DISPLAY_BOTTOM_PAGER" => "N",
 		"DISPLAY_COMPARE" => "N",
 		"DISPLAY_TOP_PAGER" => "N",
-		"DIV_TYPE" => "product_list",
+		"DIV_TYPE" => "catalog_list",
 		"ELEMENT_SORT_FIELD" => "name",
 		"ELEMENT_SORT_FIELD2" => "timestamp_x",
 		"ELEMENT_SORT_ORDER" => "desc",
