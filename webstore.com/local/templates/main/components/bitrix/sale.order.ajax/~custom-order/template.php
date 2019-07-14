@@ -14,8 +14,6 @@ use Bitrix\Main\Localization\Loc;
 
 ?>
 
-<? if($_REQUEST['ajax'] == "y") $APPLICATION->RestartBuffer() ?>
-
 <div class="container">
 
 		<div class="order">
@@ -96,5 +94,3 @@ use Bitrix\Main\Localization\Loc;
 		</div>
 
 	</div>
-
-	<? if($_REQUEST['ajax'] == "y") die() ?>

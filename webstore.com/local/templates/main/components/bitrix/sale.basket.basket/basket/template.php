@@ -5,10 +5,6 @@ use Bitrix\Main\Localization\Loc;
 
 \Bitrix\Main\UI\Extension::load("ui.fonts.ruble");
 
-// TODO:
-// 1. Доробити пусту корзину ->
-// include(Main\Application::getDocumentRoot().$templateFolder.'/empty.php');
-
 /**
  * @var array $arParams
  * @var array $arResult

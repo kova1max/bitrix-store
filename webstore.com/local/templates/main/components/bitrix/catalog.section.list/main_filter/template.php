@@ -80,8 +80,6 @@ $intCurrentDepth = 1;
 			<div class="slider_nav"><i class="svg-next"></i></div>
 		</div>
 
-		<!-- TODO: CONTENT -->
-
 		<div class="slider_content">
 			<div class="slider_title">Optima Classic EVS</div>
 			<ul>

@@ -441,10 +441,7 @@ Array(
 "USE_PRICE_COUNT" => "N",
 "USE_PRODUCT_QUANTITY" => "N"
 )
-);
-
-?>
-
+);?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:main.feedback",
 	"feedback",

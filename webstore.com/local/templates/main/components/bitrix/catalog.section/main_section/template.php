@@ -19,6 +19,7 @@ $this->setFrameMode(true);
 	<? 
 	
 	foreach ($arResult["ITEMS"] as $arItem) {
+
 		foreach($arItem['PROPERTIES']['STATUS']['VALUE'] as $arValue) {
 			if($arValue == $arParams['PROD_STATUS']) {
 
@@ -26,18 +27,18 @@ $this->setFrameMode(true);
 				$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BCT_ELEMENT_DELETE_CONFIRM')));
 	?>
 
-	<? if(is_array($arItem["PREVIEW_PICTURE"])) {?>
+	<? if (is_array($arItem["PREVIEW_PICTURE"])) {?>
 
 	<div class="product_item">
-		<div href="<?= $arItem["~DETAIL_PAGE_URL"] ?>" class="product_item_img">
+		<div href="/catalog/<?= $arItem["IBLOCK_SECTION_ID"] . "/" . $arItem['ID'] ?>/" class="product_item_img">
 
 			<div class="product_item_prom">
 				<?foreach($arItem['PROPERTIES']['STATUS']['VALUE'] as $arVal) {?>
 					<?if($arVal != "hit_prodazh") {?>
-						<?
-						$name = $arVal == "product_item_new" ? "new" : '%';	
-						?>
-						<div class="<?=$arVal?>" title="Скидка"><?=$name?></div> 
+					<?
+							$name = $arVal == "product_item_new" ? "new" : '%';	
+							?>
+					<div class="<?= $arVal ?>" title="Скидка"><?= $name ?></div>
 				<?} }?>
 			</div>
 
@@ -51,11 +52,11 @@ $this->setFrameMode(true);
 
 			<select class="select catalog-items-list">
 				<? if (is_array($arItem['OFFERS'])) : ?>
-					<? foreach ($arItem['OFFERS'] as $arOption) : ?>
-						<option data-compare="<?= "/catalog/" . $arItem['IBLOCK_SECTION_ID'] . "/?action=ADD_TO_COMPARE_LIST&id=" . $arOption['ID'] ?>" data-add2basket="<?= "/catalog/" . $arItem['IBLOCK_SECTION_ID'] . "/?action=ADD2BASKET&id=" . $arOption['ID'] ?>" data-price="<?= $arOption['PRICES']['BASE']['PRINT_VALUE'] ?>" data-size="<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?>">
-							<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $arOption['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?>
-						</option>
-					<? endforeach; ?>
+				<? foreach ($arItem['OFFERS'] as $arOption) : ?>
+				<option data-compare="<?= "/catalog/" . $arItem['IBLOCK_SECTION_ID'] . "/?action=ADD_TO_COMPARE_LIST&id=" . $arOption['ID'] ?>" data-add2basket="<?= "/catalog/" . $arItem['IBLOCK_SECTION_ID'] . "/?action=ADD2BASKET&id=" . $arOption['ID'] ?>" data-price="<?= $arOption['PRICES']['BASE']['PRINT_VALUE'] ?>" data-size="<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?>">
+					<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $arOption['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?>
+				</option>
+				<? endforeach; ?>
 				<? endif; ?>
 			</select>
 

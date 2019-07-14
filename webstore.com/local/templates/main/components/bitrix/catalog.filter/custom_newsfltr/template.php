@@ -12,9 +12,6 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
-// TODO: Убрать тайтл подписки на рассылки
-// TODO: На главной товарам добавить свойства и отфильтровать
-
 ?>
 
 <form class="filter" name="<?echo $arResult["FILTER_NAME"]."_form"?>" action="<?echo $arResult["FORM_ACTION"]?>" method="get">

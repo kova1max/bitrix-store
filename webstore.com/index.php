@@ -24,7 +24,7 @@
 		"TOP_DEPTH" => "10",
 		"VIEW_MODE" => "LIST"
 	)
-);?> <!-- FIXME: FEATURES -->
+);?>
 <div class="features">
 	<div class="container">
 		<div class="features_list">

@@ -3,8 +3,6 @@
 use Bitrix\Main\Localization\Loc;
 ?>
 
-<? if($_REQUEST['ajax'] == "y") $APPLICATION->RestartBuffer(); ?>
-
 <div class="bx-sbb-empty-cart-container">
 	<div class="bx-sbb-empty-cart-image">
 		<img src="" alt="">
@@ -27,5 +25,3 @@ use Bitrix\Main\Localization\Loc;
 	}
 	?>
 </div>
-
-<? if($_REQUEST['ajax'] == "y") die(); ?>

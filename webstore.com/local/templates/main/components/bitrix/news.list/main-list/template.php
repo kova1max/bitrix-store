@@ -12,8 +12,6 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
-// TODO: На главной товарам добавить свойства и отфильтровать
-
 ?>
 
 <div class="useful">
