@@ -29,6 +29,8 @@ else {
 
 ?>
 
+<?if($_REQUEST['use_ajax'] == "y") $APPLICATION->RestartBuffer();?>
+
 <form action="<?= $APPLICATION->GetCurPage(); ?>" method="POST" name="ORDER_FORM" id="ORDER_FORM" onsubmit="submitForm(this); return false;">
 
 
@@ -147,3 +149,5 @@ else {
 	</div>
 
 </form>
+
+<?if($_REQUEST['use_ajax'] == "y") die();?>

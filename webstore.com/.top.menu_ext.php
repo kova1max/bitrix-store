@@ -104,12 +104,12 @@ if ($obCache->InitCache('600', $cache_id, $cache_path)) {
 
 					};
 
-					$url = parse_url($ob['SECTION_PAGE_URL'])['query'];
-					parse_str($url, $url);
+					//$url = parse_url($ob['SECTION_PAGE_URL'])['query'];
+					//parse_str($url, $url);
 
 					$res_array[$id_key] = array(
 						0 => $ob['NAME'],
-						1 => '/catalog/' . $ob['ID'] . '/',
+						1 =>$ob['SECTION_PAGE_URL'],
 						3 => array(
 							'IS_PARRENT' => '1',
 							'DEPTH_LEVEL' => $ob['ELEMENT_CNT'] > 0 ? 2 : 1,
@@ -117,7 +117,7 @@ if ($obCache->InitCache('600', $cache_id, $cache_path)) {
 							'ELEMENT_CNT' => $ob['ELEMENT_CNT'],
 							'UF_ROLE' => $ob['UF_ROLE'],
 							'SORT' => $ob['SORT'],
-							'URL' => '/catalog/'.$url['SECTION_ID'].'/',
+							'URL' => $ob['SECTION_PAGE_URL'],
 							'ID' => $ob['ID'],
 							'ICON' => $ob['UF_ICON'],
 							'ITEMS' => $temp
@@ -141,7 +141,6 @@ if ($obCache->InitCache('600', $cache_id, $cache_path)) {
 							'SORT' => $item['SORT']
 						)
 					);
-					print_r($item);
 				}
 
 				function sort_menu($a, $b)

@@ -100,7 +100,10 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 ?>
 
+<?if($_REQUEST['use_ajax'] == y) $APPLICATION->RestartBuffer();?>
+
 <div class="container">
+
 	<div class="cart">
 		<div class="cart_item">
 			<div class="cart_gallery">
@@ -159,20 +162,20 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 						<?if($_COOKIE['comments_rating'] > 0):?>
 						<div class="cart_info_star">
 							<?for($i = 0; $i < $_COOKIE['comments_rating']; $i++):?>
-								<i class="svg-star"></i>
+							<i class="svg-star"></i>
 							<?endfor;?>
 							<?for($i = 0; $i < 5 - $_COOKIE['comments_rating']; $i++):?>
-								<i class="svg-star-o"></i>
+							<i class="svg-star-o"></i>
 							<?endfor;?>
 						</div>
 						<?endif;?>
-						<a href="#" class="cart_info_reviews"><?=$_COOKIE['comments_count']?> отзывов</a>
+						<a href="#" class="cart_info_reviews"><?= $_COOKIE['comments_count'] ?> отзывов</a>
 					</div>
 
 					<!-- WISH LIST -->
 
 					<div class="cart_info_wishlist">
-						<i class="svg-heart"></i><span><?=$arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE']?> людей добавили <a href="#">в избранное</a></span>
+						<i class="svg-heart"></i><span><?= $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] ?> людей добавили <a href="#">в избранное</a></span>
 					</div>
 
 				</div>
@@ -183,10 +186,10 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 						<? if (is_array($arResult['OFFERS'][0])) : ?>
 						<? foreach ($arResult['OFFERS'] as $ar) : ?>
-							<option data-price="<?= $ar['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?>" data-sale="<?= $ar['MIN_PRICE']['DISCOUNT_DIFF_PERCENT'] ?>" data-compare="<?= $ar['COMPARE_URL'] ?>" data-add2basket="<?= $ar['ADD_URL'] ?>" data-old-price="<?= $ar['MIN_PRICE']['PRINT_VALUE'] ?>" data-size="<?= $ar['PROPERTIES']['SIZE']['VALUE'] ?>"><?= $ar['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $ar['PRICES']['BASE']['PRINT_VALUE'] ?></option>
+						<option data-price="<?= $ar['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?>" data-sale="<?= $ar['MIN_PRICE']['DISCOUNT_DIFF_PERCENT'] ?>" data-compare="<?= $ar['COMPARE_URL'] ?>" data-add2basket="<?= $ar['ADD_URL'] ?>" data-old-price="<?= $ar['MIN_PRICE']['PRINT_VALUE'] ?>" data-size="<?= $ar['PROPERTIES']['SIZE']['VALUE'] ?>"><?= $ar['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $ar['PRICES']['BASE']['PRINT_VALUE'] ?></option>
 						<? endforeach; ?>
 						<? else : ?>
-							<option>No offers added</option>
+						<option>No offers added</option>
 						<? endif; ?>
 
 					</select>
@@ -209,13 +212,13 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 						<a href="<?= $arResult['OFFERS'][0]['ADD_URL'] ?>" class="btn inbasket">
 							<i class="svg-basket"></i>В корзину</a>
 
-						<a data-fancybox data-type="ajax" data-src="webstore.com/bitrix/templates/main/fancy/favorites.php" href="javascript:;" class="btn_more">Купить в 1 клик</a>
+						<a href="#modal_5" class="fancymodal btn_more">Купить в 1 клик</a>
 					</div>
 
 					<!-- RIGHT LINKS -->
 
 					<div class="cart_info_item cart_info_tools_list">
-						<a href="?ADD2FAVORITES=<?=$favParam?>" class="favorites cart_info_tools">
+						<a href="?ADD2FAVORITES=<?= $favParam ?>" class="favorites cart_info_tools">
 							<i class="svg-heart2"></i>
 							<span>В избранное</span>
 						</a>
@@ -253,6 +256,9 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 		</div>
 	</div>
 </div>
+
+<?if($_REQUEST['use_ajax'] == y) die();?>
+
 
 <!-- КОМПЛЕКТ -->
 
@@ -333,3 +339,117 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 	</div>
 </div>
 <?endif;?>
+
+<div id="modal_5" class="modal hidden_modal">
+	<div class="modal_title">Купить в один клик<a href="" class="fancybox-close"></a></div>
+	<table class="basket_formed_list">
+		<tr>
+			<td class="basket_dell"><a href="#" class=""><i class="svg-cancel-o"></i></a></td>
+			<td class="basket_img">
+				<a href="#"><img src="img/catalog_1.jpg" alt=""></a>
+			</td>
+			<td class="basket_name">
+				<a href="#">Матрас Венето Family Style 120х190 см </a>
+				<select class="select">
+					<option value="">115x210 - 8 500 руб</option>
+					<option value="">115x210 - 8 500 руб</option>
+				</select>
+			</td>
+			<td class="basket_count_w">
+				<div class="basket_count">
+					<div class="basket_count_btn basket_count_minus">−</div>
+					<input type="text" class="basket_count_val" readonly value="1">
+					<div class="basket_count_btn basket_count_plus">+</div>
+				</div>
+			</td>
+			<td class="basket_price">8 500 руб</td>
+		</tr>
+	</table>
+	<div class="basket_info">
+		<label>Имя<input type="text"></label>
+		<label>Телефон<input type="text"></label>
+		<label>Ваш e-mail<input type="text"></label>
+		<div class="basket_info_bottom">
+			<a href="#" class="btn">Купить</a>
+			<p>Наш оператор свяжется с Вами в течение часа</p>
+		</div>
+	</div>
+	<div class="cheaper">
+		<div class="cheaper_swiper">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
+							<div class="cheaper_item_content">
+								<a href="#">Матрас Венето Family Style 120х190 см </a>
+								<span>8 500 руб.</span>
+							</div>
+						</div>
+						<div class="cheaper_item_operation">+</div>
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
+							<div class="cheaper_item_content">
+								<a href="#">Матрас Венето Family Style 120х190 см </a>
+								<span class="cheaper_item_old">10 500 руб</span>
+								<span>8 500 руб.</span>
+							</div>
+						</div>
+						<div class="cheaper_item_operation">=</div>
+						<div class="cheaper_item_cheaper">
+							<span>15 000 руб</span>
+							<a href="#" class="btn btn_blue">Купить комплект</a>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
+							<div class="cheaper_item_content">
+								<a href="#">Матрас Венето Family Style 120х190 см </a>
+								<span>8 500 руб.</span>
+							</div>
+						</div>
+						<div class="cheaper_item_operation">+</div>
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
+							<div class="cheaper_item_content">
+								<a href="#">Матрас Венето Family Style 120х190 см </a>
+								<span class="cheaper_item_old">10 500 руб</span>
+								<span>8 500 руб.</span>
+							</div>
+						</div>
+						<div class="cheaper_item_operation">=</div>
+						<div class="cheaper_item_cheaper">
+							<span>15 000 руб</span>
+							<a href="#" class="btn btn_blue">Купить комплект</a>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
+							<div class="cheaper_item_content">
+								<a href="#">Матрас Венето Family Style 120х190 см </a>
+								<span>8 500 руб.</span>
+							</div>
+						</div>
+						<div class="cheaper_item_operation">+</div>
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
+							<div class="cheaper_item_content">
+								<a href="#">Матрас Венето Family Style 120х190 см </a>
+								<span class="cheaper_item_old">10 500 руб</span>
+								<span>8 500 руб.</span>
+							</div>
+						</div>
+						<div class="cheaper_item_operation">=</div>
+						<div class="cheaper_item_cheaper">
+							<span>15 000 руб</span>
+							<a href="#" class="btn btn_blue">Купить комплект</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+</div>

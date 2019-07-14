@@ -43,7 +43,7 @@ $this->setFrameMode(true);
 			</div>
 
 			<div class="product_item_quick">
-				<a href="<?= $arItem["~DETAIL_PAGE_URL"] ?>?ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax" data-src="<?= $arItem["~DETAIL_PAGE_URL"] ?>?ajax=y">Быстрый просмотр</a>
+				<a href="/catalog/<?= $arItem["IBLOCK_SECTION_ID"] . "/" . $arItem['ID'] ?>/?use_ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax" data-src="/catalog/<?= $arItem["IBLOCK_SECTION_ID"] . "/" . $arItem['ID'] ?>/?use_ajax=y">Быстрый просмотр</a>
 			</div>
 			<img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="product img">
 		</div>

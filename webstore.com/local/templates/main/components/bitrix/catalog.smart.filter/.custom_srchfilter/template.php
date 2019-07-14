@@ -14,18 +14,47 @@
 
 	<input type="hidden" name="ajax" id="ajax" value="y" />
 
-	<div class="filter_head">Все результаты (кол-во)</div>
+	
+
+	<div class="filter_head">Все результаты (<?=count($arParams['SEARCH_RESULT']['ITEMS'])?>)</div>
 	<div class="filter_item">
-		<div class="filter_title">Матрасы <span>(36)</span></div>
-		<a href="#">Наматрасники <span>(302)</span></a>
-		<a href="#">Подушки <span>(302)</span></a>
-		<a href="#">Одеяла <span>(302)</span></a>
-		<a href="#">Белье <span>(302)</span></a>
-		<a href="#">Пледы <span>(302)</span></a>
-		<a href="#">Для ванной <span>(3)</span></a>
-		<a href="#">Для кухни <span>(302)</span></a>
-		<a href="#">Мебель <span>(2)</span></a>
+
+		<?$i = 0;?>
+		<?foreach($arParams['SEARCH_RESULT']['ITEMS'] as $arItem) {?>
+
+			<?
+				 preg_match("~[0-9]+~", $arItem['URL_WO_PARAMS'], $section_id);
+				 $section = CIBlockSection::GetByID($section_id[0])->fetch();
+				 $count = 0;
+
+				 foreach($arParams['SEARCH_RESULT']['ITEMS'] as $arElm){
+					 if($arElm['ITEM_ID'] == $arItem['ITEM_ID']) $count++;
+				 }
+
+			?>
+			<?if($_REQUEST['section']) {?>
+
+				<?if($section_id[0] == $_REQUEST['section']){?>
+					<div class="filter_title"><?=$section['NAME']?> <span>(<?=$count?>)</span></div>
+				<?} else {?>
+					<a href="?section=<?=$section_id[0]?>&q=<?=$arParams['SEARCH_RESULT']['QUERY']?>"><?=$section['NAME']?> <span>(<?=$count?>)</span></a>
+				<?}?>
+
+			<?} else {?>
+
+				<?if($i === 0) {?>
+					<div class="filter_title"><?=$section['NAME']?> <span>(<?=$count?>)</span></div>
+				<?} else {?>
+					<a href="?section=<?=$section_id[0]?>&q=<?=$arParams['SEARCH_RESULT']['QUERY']?>"><?=$section['NAME']?> <span>(<?=$count?>)</span></a>
+				<?}?>
+
+			<?}?>
+
+			<?$i++;?>
+		<?}?>
+
 	</div>
+
 
 	<? foreach ($arResult["ITEMS"] as $key => $arItem) : ?>
 

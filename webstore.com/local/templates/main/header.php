@@ -138,10 +138,31 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 				<div class="header_right">
 					<div class="header_search_w">
 						<a href="#" class="header_item_icon"><i class="svg-glass"></i></a>
-						<form action="#" method="post" class="header_search">
-							<input type="text">
-							<button type="submit" class="header_search_btn"><i class="svg-glass"></i><span>Поиск</span></button>
-						</form>
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:search.title",
+							"srch-title",
+							Array(
+								"CATEGORY_0" => array("iblock_catalog","iblock_offers"),
+								"CATEGORY_0_TITLE" => "",
+								"CATEGORY_0_iblock_catalog" => array("all"),
+								"CATEGORY_0_iblock_offers" => array("all"),
+								"CHECK_DATES" => "N",
+								"CONTAINER_ID" => "title-search",
+								"CONVERT_CURRENCY" => "N",
+								"INPUT_ID" => "title-search-input",
+								"NUM_CATEGORIES" => "1",
+								"ORDER" => "date",
+								"PAGE" => "#SITE_DIR#catalog/search.php",
+								"PREVIEW_TRUNCATE_LEN" => "",
+								"PRICE_CODE" => array("BASE"),
+								"PRICE_VAT_INCLUDE" => "N",
+								"SHOW_INPUT" => "Y",
+								"SHOW_OTHERS" => "N",
+								"SHOW_PREVIEW" => "N",
+								"TOP_COUNT" => "5",
+								"USE_LANGUAGE_GUESS" => "Y"
+							)
+						);?>
 					</div>
 					<a href="/catalog/compare.php" class="header_item header_comparison">
 						<?if($compareCount > 0) {?>
@@ -160,8 +181,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 						</span>
 					</a>
 
-					<a href="/personal/order/make/" class="header_item header_basket active">
-
+					<a href="/personal/order/make/?use_ajax=y" class="fancymodal2 header_item header_basket active" data-src="/personal/order/make?use_ajax=y" data-fancybox="" data-type="ajax">
 						<?if($basket['QUANTITY'] > 0) {?>
 							<span class="header_item_icon" >
 								<i class="svg-basket"></i>
