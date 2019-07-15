@@ -44,7 +44,7 @@ $aMenuLinks = Array(
 	),
 	Array(
 		"Статьи", 
-		"news/?TAB=3", 
+		"news/stati/", 
 		Array(), 
 		Array(), 
 		"" 

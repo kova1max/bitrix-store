@@ -1,0 +1,1 @@
+<div class="footer_phone">0 800 <strong>505 90 90</strong></div>

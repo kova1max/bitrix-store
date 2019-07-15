@@ -14,34 +14,50 @@ $this->setFrameMode(true);
 
 ?>
 
+<!-- FIXME: SECTION HEAD -->
+
+<div class="catalog_head">
+
+	<?if(count($arResult['SEARCH'])){?>
+		<div class="catalog_search">По запросу «<?=$arResult['REQUEST']['QUERY']?>» найдено <span><?=count($arResult['SEARCH'])?> товар(ов)</span></div>
+	<?} else {?>
+		<div class="catalog_search">По запросу «<?=$arResult['REQUEST']['QUERY']?>» ничего не найдено</div>
+	<?}?>
+	<div class="catalog_sort">
+		Сортировать:
+		<select class="select">
+			<option value="">По рейтингу</option>
+			<option value="">lorem</option>
+		</select>
+	</div>
+</div>
+
 <div class="catalog_list">
 
-	<? foreach ($arResult["ITEMS"] as $arItem) : ?>
+	<? foreach ($arResult['ORIGINAL_PARAMETERS']["ITEMS"] as $arItem) : ?>
+
 		<?
-		$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT"));
-		$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BCT_ELEMENT_DELETE_CONFIRM')));
-		$trimmed = trim($arItem["DISPLAY_PROPERTIES"]["URL"]["VALUE"]);
-		if ($trimmed !== '') {
-			if (strpos(strtolower($trimmed), "http") !== 0) {
-				$trimmed = 'http://' . $trimmed;
-			}
-		}
-		$arItem["DETAIL_PAGE_URL"] = $trimmed;
+			$arItem = CIBlockElement::GetByID($arItem['ITEM_ID'])->fetch();
+
+			$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT"));
+			$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BCT_ELEMENT_DELETE_CONFIRM')));
+
 		?>
 
-		<? if (is_array($arItem["PREVIEW_PICTURE"])) : ?>
+		<? if ($arItem["PREVIEW_PICTURE"]) : ?>
 
 			<div class="product_item">
-				<div href="<?= $arItem["~DETAIL_PAGE_URL"] ?>" class="product_item_img">
+				<div href="/catalog/<?= $arItem["IBLOCK_SECTION_ID"] . '/' . $arItem['ID']?>/" class="product_item_img">
 					<div class="product_item_quick">
-							<a href="<?= $arItem["~DETAIL_PAGE_URL"] ?>?ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax"  data-src="<?= $arItem["~DETAIL_PAGE_URL"] ?>?ajax=y">Быстрый просмотр</a>
+							<a href="/catalog/<?= $arItem["IBLOCK_SECTION_ID"] . '/' . $arItem['ID']?>/" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax"  data-src="<?= $arItem["~DETAIL_PAGE_URL"] ?>?ajax=y">Быстрый просмотр</a>
 						</div>
-					<img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="product img">
+					<img src="<?=CFile::GetPath($arItem['PREVIEW_PICTURE'])?>" alt="product img">
 				</div>
 				<a href="<?= $arItem["~DETAIL_PAGE_URL"] ?>" class="product_item_title"><?= $arItem["NAME"] ?></a>
 				<div class="product_item_size">Варианты:
 
 					<select class="select catalog-items-list">
+
 						<? if (is_array($arItem['OFFERS'])) : ?>
 							<? foreach ($arItem['OFFERS'] as $arOption) : ?>
 								<option data-compare="<?= $arOption['COMPARE_URL'] ?>" data-add2basket="<?= $arOption['ADD_URL'] ?>" data-price="<?= $arOption['PRICES']['BASE']['PRINT_VALUE'] ?>" data-size="<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?>"><?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $arOption['PRICES']['BASE']['PRINT_VALUE'] ?></option>
@@ -52,7 +68,7 @@ $this->setFrameMode(true);
 				</div>	
 				<div class="product_item_price"><?= $arItem['OFFERS'][0]['PRICES']['BASE']['PRINT_VALUE'] ?></div>
 				<div class="product_item_bottom">
-					<a href="<?= $arItem['OFFERS'][0]['COMPARE_URL'] ?>" class="fancymodal product_item_comparison"><i class="svg-list"></i></a>
+					<a href="123<?= $arItem['OFFERS'][0]['COMPARE_URL'] ?>" class="fancymodal product_item_comparison"><i class="svg-list"></i></a>
 					<a href="<?= $arItem['OFFERS'][0]['ADD_URL'] ?>" class="fancymodal btn product_item_btn"><i class="svg-basket"></i> В корзину</a>
 				</div>
 			</div>

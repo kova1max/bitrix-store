@@ -8,47 +8,97 @@ IncludeTemplateLangFile(__FILE__);
 				<div class="footer_left">
 					<div class="footer_item">
 						<div class="footer_title">Информация</div>
-						<ul class="footer_menu">
-							<li><a href="company.php">О компании</a></li>
-							<li><a href="#">Доставка и оплата</a></li>
-							<li><a href="#">Возврат и обмен</a></li>
-							<li><a href="news.php">Статьи</a></li>
-							<li><a href="#">Сертификаты</a></li>
-							<li><a href="reviews.php">Отзывы</a></li>
-							<li><a href="news.php">Новости</a></li>
-							<li><a href="contact.php">Контакты</a></li>
-						</ul>
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:menu",
+							"super_top",
+							Array(
+								"CLASS" => "footer_menu",
+								"ALLOW_MULTI_SELECT" => "N",
+								"CHILD_MENU_TYPE" => "left",
+								"COMPONENT_TEMPLATE" => "custom_menu",
+								"DELAY" => "N",
+								"MAX_LEVEL" => "1",
+								"MENU_CACHE_GET_VARS" => "",
+								"MENU_CACHE_TIME" => "3600",
+								"MENU_CACHE_TYPE" => "N",
+								"MENU_CACHE_USE_GROUPS" => "Y",
+								"MENU_THEME" => "site",
+								"ROOT_MENU_TYPE" => "left",
+								"USE_EXT" => "N"
+							)
+						);?>
 					</div>
 					<div class="footer_item">
 						<div class="footer_title">Продукция</div>
-						<ul class="footer_menu">
-							<li><a href="#">Матрасы</a></li>
-							<li><a href="#">Подушки</a></li>
-							<li><a href="#">Одеяла</a></li>
-							<li><a href="#">Постельное белье</a></li>
-							<li><a href="#">Наматрасники</a></li>
-							<li><a href="#">Пледы</a></li>
-							<li><a href="#">Для ванной</a></li>
-							<li><a href="#">Для кухни</a></li>
-							<li><a href="#">Мебель</a></li>
-							<li><a href="#">Рапродажа</a></li>
-						</ul>
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:menu",
+							"super_top",
+							Array(
+								"CLASS" => "footer_menu",
+								"ALLOW_MULTI_SELECT" => "N",
+								"CHILD_MENU_TYPE" => "left",
+								"DELAY" => "N",
+								"MAX_LEVEL" => "1",
+								"MENU_CACHE_GET_VARS" => array(""),
+								"MENU_CACHE_TIME" => "3600",
+								"MENU_CACHE_TYPE" => "A",
+								"MENU_CACHE_USE_GROUPS" => "N",
+								"ROOT_MENU_TYPE" => "bottom",
+								"USE_EXT" => "Y"
+							)
+						);?>
 					</div>
 				</div>
 				<div class="footer_right">
 					<div class="footer_contact">
-						<div class="footer_title"><i class="svg-geo"></i>Москва, ул. Пушкина 10</div>
-						<div class="footer_phone">0 800 <strong>505 90 90</strong></div>
-						<a href="mailto:domsna@yandex.ru" class="footer_link">domsna@yandex.ru</a>
+
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:main.include",
+							"",
+							Array(
+								"AREA_FILE_SHOW" => "file",
+								"AREA_FILE_SUFFIX" => "inc",
+								"EDIT_TEMPLATE" => "",
+								"PATH" => SITE_TEMPLATE_PATH . "/include/footer/adress.php"
+							)
+						);?>
+
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:main.include",
+							"",
+							Array(
+								"AREA_FILE_SHOW" => "file",
+								"AREA_FILE_SUFFIX" => "inc",
+								"EDIT_TEMPLATE" => "",
+								"PATH" => SITE_TEMPLATE_PATH . "/include/footer/number.php"
+							)
+						);?>
+
+						<?$APPLICATION->IncludeComponent(
+							"bitrix:main.include",
+							"",
+							Array(
+								"AREA_FILE_SHOW" => "file",
+								"AREA_FILE_SUFFIX" => "inc",
+								"EDIT_TEMPLATE" => "",
+								"PATH" => SITE_TEMPLATE_PATH . "/include/footer/email.php"
+							)
+						);?>
+						
 						<br>
+						<!-- FIXME: Обратный звонок (вспливайка) -->
 						<a href="#" class="btn footer_callback">Обратный звонок</a>
+
+						<!-- FIXME: Ссылки на соц. сети -->
 						<div class="footer_social">
-							<a href="#"><i class="icon-social_vk"></i></a>
-							<a href="#"><i class="icon-social_gp"></i></a>
-							<a href="#"><i class="icon-social_fb"></i></a>
-							<a href="#"><i class="icon-social_yt"></i></a>
+							<a href="/some-url-adress/"><i class="icon-social_vk"></i></a>
+							<a href="/some-url-adress/"><i class="icon-social_gp"></i></a>
+							<a href="/some-url-adress/"><i class="icon-social_fb"></i></a>
+							<a href="/some-url-adress/"><i class="icon-social_yt"></i></a>
 						</div>
+
 					</div>
+
 					<div class="footer_info">
 						<div class="footer_copy">
 							<?$APPLICATION->IncludeComponent(

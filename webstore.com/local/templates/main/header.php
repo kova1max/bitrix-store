@@ -82,6 +82,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 				"bitrix:menu",
 				"super_top",
 				array(
+					"CLASS" => "top_menu_list",
 					"ALLOW_MULTI_SELECT" => "N",
 					"CHILD_MENU_TYPE" => "left",
 					"COMPONENT_TEMPLATE" => "custom_menu",

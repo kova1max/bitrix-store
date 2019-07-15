@@ -12,7 +12,6 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
-$APPLICATION->SetTitle('123');
 ?>
 
 <?$APPLICATION->IncludeComponent(

@@ -15,7 +15,7 @@ $this->setFrameMode(true);
 ?>
 
 <div class="container">
-	<h1>Новости, статьи и обзоры</h1>
+	<!-- <h1>Новости, статьи и обзоры</h1> -->
 	<div class="catalog novosti">
 
 		<!-- LEFT FILTER -->

@@ -2,7 +2,7 @@
 global $PARAMS;
 ?>	
 <?if (!empty($arResult)):?>
-	<ul class="top_menu_list">
+	<ul class="<?=$arParams['CLASS']?>">
 		<?foreach($arResult as $arItem):?>
 					<li><a href="<?=$arItem["LINK"]?>"><?=$arItem["TEXT"]?></a></li>
 		<?endforeach?>

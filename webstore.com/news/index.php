@@ -1,8 +1,10 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetPageProperty("title", "Новости");
-$APPLICATION->SetTitle("Новости");
-?><?$APPLICATION->IncludeComponent(
+$APPLICATION->SetPageProperty("title", "Новости, статьи и обзоры");
+$APPLICATION->SetTitle("Новости, статьи и обзоры");
+?>
+
+<?$APPLICATION->IncludeComponent(
 	"bitrix:news", 
 	"news_page", 
 	array(
@@ -206,4 +208,6 @@ $APPLICATION->SetTitle("Новости");
 		)
 	),
 	false
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?>
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

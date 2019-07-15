@@ -1,0 +1,1 @@
+<div class="footer_title"><i class="svg-geo"></i>Москва, ул. Пушкина 10</div>

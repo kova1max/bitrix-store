@@ -1,0 +1,1 @@
+<a href="mailto:domsna@yandex.ru" class="footer_link">domsna@yandex.ru</a>
