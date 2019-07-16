@@ -8,7 +8,8 @@ $arSort = array(
 	0 => array(
 		'name' => 'По имени (возр.)',
 		'sort' => 'name',
-		'method' => 'asc'
+		'method' => 'asc',
+		'selected'=>true
 	),
 
 	1 => array(
@@ -31,6 +32,14 @@ $arSort = array(
 
 );
 
+foreach($arSort as &$sort_method) {
+	if($sort_method['sort']==$_REQUEST['sort'] && $sort_method['method']==$_REQUEST['method']) 
+	{
+		unset($sort_method[0]['selected']);
+		$sort_method['selected']='true';
+	}
+}
+
 ?>
 
 <div class="catalog_head">
@@ -52,7 +61,7 @@ $arSort = array(
 					);
 				?>
 		
-				<option data-url="<?=$url?>" name="<?=$arSortItem['sort']?>" value="<?=$arSortItem['method']?>"><?=$arSortItem['name']?></option>
+				<option <?if($arSortItem['selected']=='true') {?> selected <?}?> data-url="<?=$url?>" name="<?=$arSortItem['sort']?>" value="<?=$arSortItem['method']?>"><?=$arSortItem['name']?></option>
 
 			<? } ?>
 

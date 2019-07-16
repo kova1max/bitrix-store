@@ -2,11 +2,6 @@
 use Bitrix\Main\Localization\Loc;
 ?>
 
-<?// FIXME: УБРАТЬ PRINT_R
-print_r('<pre style="text-align: left;color: red;">');
-print_r('HELLO WORLD. by sale.basket.basket -> basket -> empty.php');
-print_r('</pre>');?>
-
 <!-- <div class="bx-sbb-empty-cart-container">
 	<div class="bx-sbb-empty-cart-image">
 		<img src="" alt="">

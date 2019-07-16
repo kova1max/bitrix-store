@@ -89,7 +89,16 @@ if ($isFilter)
 	if (!isset($arCurSection))
 		$arCurSection = array();
 }
+
+foreach(CIBlockSection::GetByID($arCurSection)->GetNext() as $elm){
+	// FIXME: УБРАТЬ PRINT_R
+	print_r('<pre style="text-align: left;color: red;">');
+	print_r($elm);
+	print_r('</pre>');
+}
 ?>
+
+
 <div class="container">
 	<div class="catalog">
 <?

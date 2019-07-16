@@ -5,9 +5,6 @@
 	if($arParams['INCLUDE_TEMPLATE'] !== false) { 
 ?>
 
-
-
-
 <form class="filter" name="<? echo $arResult["FILTER_NAME"] . "_form" ?>" action="<? echo $arResult["FORM_ACTION"] ?>" method="get">
 
 	<? foreach ($arResult["HIDDEN"] as $arItem) : ?>
