@@ -1,16 +1,35 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
-/** @var array $arParams */
-/** @var array $arResult */
-/** @global CMain $APPLICATION */
-/** @global CUser $USER */
-/** @global CDatabase $DB */
-/** @var CBitrixComponentTemplate $this */
-/** @var string $templateName */
-/** @var string $templateFile */
-/** @var string $templateFolder */
-/** @var string $componentPath */
-/** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+
+global $APPLICATION;
+
+$arSort = array(
+
+	0 => array(
+		'name' => 'По имени (возр.)',
+		'sort' => 'name',
+		'method' => 'asc'
+	),
+
+	1 => array(
+		'name' => 'По имени (спад.)',
+		'sort' => 'name',
+		'method' => 'desc'
+	),
+
+	2 => array(
+		'name' => 'По дате создания (возр.)',
+		'sort' => 'timestamp_x',
+		'method' => 'asc'
+	),
+
+	3 => array(
+		'name' => 'По дате создания (спад.)',
+		'sort' => 'timestamp_x',
+		'method' => 'desc'
+	),
+
+);
 
 ?>
 
@@ -23,8 +42,20 @@ $this->setFrameMode(true);
 	<div class="catalog_sort">
 		Сортировать:
 		<select class="select_sort select">
-			<option name="name" value="desc">По имени</option>
-			<option name="timestamp_x" value="desc">По дате добавления</option>
+
+			<? foreach($arSort as $arSortItem) { ?>
+
+				<?
+					$url = $APPLICATION->GetCurPageParam(
+						'sort=' . $arSortItem['sort'] . '&method=' . $arSortItem['method'] . '&q=' . $arParams['QUERY_NAME'],
+						array('sort', 'method')
+					);
+				?>
+		
+				<option data-url="<?=$url?>" name="<?=$arSortItem['sort']?>" value="<?=$arSortItem['method']?>"><?=$arSortItem['name']?></option>
+
+			<? } ?>
+
 		</select>
 	</div>
 
@@ -49,7 +80,7 @@ $this->setFrameMode(true);
 					<div class="product_item">
 						<div href="<?= $arItem['DETAIL_PAGE_URL'] ?>" class="product_item_img">
 							<div class="product_item_quick">
-									<a href="<?= $arItem["DETAIL_PAGE_URL"] ?>?ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax"  data-src="<?= $arItem["DETAIL_PAGE_URL"] ?>?ajax=y">Быстрый просмотр</a>
+									<a href="<?= $arItem["DETAIL_PAGE_URL"] ?>?use_ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax"  data-src="<?= $arItem["DETAIL_PAGE_URL"] ?>?ajax=y">Быстрый просмотр</a>
 								</div>
 							<img src="<?= $arItem['PREVIEW_PICTURE']['SRC'] ?>" alt="product img">
 						</div>
@@ -59,7 +90,7 @@ $this->setFrameMode(true);
 							<select class="select catalog-items-list">
 								<? if (is_array($arItem['OFFERS'])) { ?>
 									<? foreach ($arItem['OFFERS'] as $arOption) { ?>
-										<option data-compare="<?= '/catalog/' . $arParams['SECTION_ID'] . '/?action=ADD_TO_COMPARE_LIST&id=' . $arOption['ID'] ?>" data-add2basket="<?= '/catalog/' . $arParams['SECTION_ID'] . '/?action=ADD2BASKET&id=' . $arOption['ID'] ?>" data-price="<?= $arOption['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?>" data-size="<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?>"><?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $arOption['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?></option>
+										<option data-compare="<?= '/catalog/' . $arParams['SECT_ID'] . '/?action=ADD_TO_COMPARE_LIST&id=' . $arOption['ID'] ?>" data-add2basket="<?= '/catalog/' . $arParams['SECT_ID'] . '/?action=ADD2BASKET&id=' . $arOption['ID'] ?>" data-price="<?= $arOption['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?>" data-size="<?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?>"><?= $arOption['PROPERTIES']['SIZE']['VALUE'] ?> - <?= $arOption['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?></option>
 									<? } ?>
 								<? } ?>
 							</select>
@@ -67,8 +98,8 @@ $this->setFrameMode(true);
 						</div>	
 						<div class="product_item_price"><?= $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?></div>
 						<div class="product_item_bottom">
-							<a href="<?= '/catalog/' . $arParams['SECTION_ID'] . '/?action=ADD_TO_COMPARE_LIST&id=' . $arItem['OFFERS'][0]['ID'] ?>" class="fancymodal product_item_comparison"><i class="svg-list"></i></a>
-							<a href="<?= '/catalog/' . $arParams['SECTION_ID'] . '/?action=ADD2BASKET&id=' . $arItem['OFFERS'][0]['ID'] ?>" class="fancymodal btn product_item_btn"><i class="svg-basket"></i> В корзину</a>
+							<a href="<?= '/catalog/' . $arParams['SECT_ID'] . '/?action=ADD_TO_COMPARE_LIST&id=' . $arItem['OFFERS'][0]['ID'] ?>" class="fancymodal product_item_comparison"><i class="svg-list"></i></a>
+							<a href="<?= '/catalog/' . $arParams['SECT_ID'] . '/?action=ADD2BASKET&id=' . $arItem['OFFERS'][0]['ID'] ?>" class="fancymodal btn product_item_btn"><i class="svg-basket"></i> В корзину</a>
 						</div>
 					</div>
 

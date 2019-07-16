@@ -444,14 +444,6 @@ $(function() {
         'closeBtn': false,
         autoHeight: true,
         afterShow: function(current, previous) {
-            /*
-            modalTop.update();
-            modalThumbs.update();
-            for (var i = 0; i < cheaperSwiper.length; i++) {
-                cheaperSwiper[i].update();
-            }*/
-
-            console.log(this);
         }
     });
 

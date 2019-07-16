@@ -133,8 +133,6 @@
 	)
 	);?>
 
-
-	<!-- FIXME: Пофіксити дів -->
 	<div class="catalog_content">
 
 		<?$APPLICATION->IncludeComponent(
