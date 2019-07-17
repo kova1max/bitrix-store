@@ -177,6 +177,9 @@ $componentElementParams = array(
 
 );
 
+if($_REQUEST['use_ajax'] == "y")
+	$componentElementParams['USE_AJAX'] = "Y";
+
 // Сравнение товаров
 
 if ($arParams["USE_COMPARE"] === "Y") {
@@ -201,6 +204,8 @@ if ($arParams["USE_COMPARE"] === "Y") {
 
 // Первый контейнер
 
+if($_REQUEST['use_ajax'] == 'y') $APPLICATION->RestartBuffer();
+
 $elementId = $APPLICATION->IncludeComponent(
 	'bitrix:catalog.element',
 	'catalog_elm',
@@ -208,7 +213,9 @@ $elementId = $APPLICATION->IncludeComponent(
 	$component
 );
 
-// CACHE
+if($_REQUEST['use_ajax'] == 'y') die();
+
+	// CACHE
 
 $obCache = new CPHPCache();
 if ($obCache->InitCache(36000, serialize($recommendedCacheId), '/catalog/recommended')){
@@ -267,6 +274,7 @@ elseif ($obCache->StartDataCache()){
 	}
 
 	$obCache->EndDataCache($recommendedData);
+
 }
 
 // ТАКЖЕ ИНТЕРЕСУЮТСЯ БЛОК

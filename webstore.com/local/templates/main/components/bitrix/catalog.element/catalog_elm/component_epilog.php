@@ -129,6 +129,8 @@ if (isset($templateData['JS_OBJ']))
 
 <?}}?>
 
+
+
 <?
 
 $Characteristics = [12, 13 , 14, 15];
@@ -143,21 +145,20 @@ $res = CIBlockElement::GetList(
 	Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*")
 );
 
-while( $ob = $res->GetNextElement() ): ?>
+while($ob = $res->GetNextElement()) { ?>
 
 <?
+		$arField = $ob->GetFields();  
+		$arProp = $ob->GetProperties();
+	?>
 
-	$arField = $ob->GetFields();  
-	$arProp = $ob->GetProperties();
+<?foreach($this->elements as $item) {?>
 
-?>
-
-<?
-foreach($this->elements as $item):
-?>
-
+<?if($arParams['USE_AJAX'] != "Y") {?>
 <div class="container">
-	<div class="cart_tabs">
+	<?}?>
+
+	<div class="cart_tabs <?echo $arParams['USE_AJAX'] == "Y" ? 'hide' : ''?>">
 		<div class="cart_tabs_nav">
 			<a href="#" data-tabs="1" class="active">Описание и Характеристики</a>
 			<a href="#" data-tabs="2">Доставка и гарантия</a>
@@ -177,25 +178,25 @@ foreach($this->elements as $item):
 						<div class="cart_characteristics_list">
 
 							<?foreach($item['DISPLAY_PROPERTIES'] as $property){
-								
-								if(($property['PROPERTY_TYPE'] == "S") && ($property['USER_TYPE'] != "HTML")){?>
+									
+									if(($property['PROPERTY_TYPE'] == "S") && ($property['USER_TYPE'] != "HTML")){?>
 
-									<div class="cart_characteristics_item">
-										<div class="cart_characteristics_left">
-											<?=$property['NAME']?>
-											<i class="svg-question">
-												<span>
-													<img class="callout" src="img/callout2.png" />
-													<?=$property['DESCRIPTION']?>
-												</span>
-											</i>
-										</div>
-										<span></span>
-										<div class="cart_characteristics_right"> <?=$property['DISPLAY_VALUE']?></div>
-									</div>
+							<div class="cart_characteristics_item">
+								<div class="cart_characteristics_left">
+									<?= $property['NAME'] ?>
+									<i class="svg-question">
+										<span>
+											<img class="callout" src="img/callout2.png" />
+											<?= $property['DESCRIPTION'] ?>
+										</span>
+									</i>
+								</div>
+								<span></span>
+								<div class="cart_characteristics_right"> <?= $property['DISPLAY_VALUE'] ?></div>
+							</div>
 
 							<?}}?>
-							
+
 						</div>
 					</div>
 				</div>
@@ -209,57 +210,69 @@ foreach($this->elements as $item):
 				</div>
 			</div>
 
+			<?if($arParams['USE_AJAX'] != "Y") {?>
+
 			<?$APPLICATION->IncludeComponent(
-				"bitrix:catalog.comments",
-				"comments",
-				Array(
-					"BLOG_TITLE" => "Комментарии",
-					"BLOG_URL" => "catalog_comments",
-					"BLOG_USE" => "Y",
-					"CACHE_TIME" => "0",
-					"CACHE_TYPE" => "A",
-					"CHECK_DATES" => "N",
-					"COMMENTS_COUNT" => "5",
-					"ELEMENT_CODE" => "",
-					"ELEMENT_ID" => $arParams['ELEMENT_ID'],
-					"EMAIL_NOTIFY" => "N",
-					"FB_USE" => "N",
-					"IBLOCK_ID" => "14",
-					"IBLOCK_TYPE" => "catalog",
-					"PATH_TO_SMILE" => "/bitrix/images/blog/smile/",
-					"RATING_TYPE" => "standart",
-					"SHOW_DEACTIVATED" => "N",
-					"SHOW_RATING" => "Y",
-					"SHOW_SPAM" => "Y",
-					"TEMPLATE_THEME" => "blue",
-					"URL_TO_COMMENT" => "",
-					"VK_USE" => "N",
-					"WIDTH" => ""
-				)
-			);?>
+						"bitrix:catalog.comments",
+						"comments",
+						Array(
+							"BLOG_TITLE" => "Комментарии",
+							"BLOG_URL" => "catalog_comments",
+							"BLOG_USE" => "Y",
+							"CACHE_TIME" => "0",
+							"CACHE_TYPE" => "A",
+							"CHECK_DATES" => "N",
+							"COMMENTS_COUNT" => "5",
+							"ELEMENT_CODE" => "",
+							"ELEMENT_ID" => $arParams['ELEMENT_ID'],
+							"EMAIL_NOTIFY" => "N",
+							"FB_USE" => "N",
+							"IBLOCK_ID" => "14",
+							"IBLOCK_TYPE" => "catalog",
+							"PATH_TO_SMILE" => "/bitrix/images/blog/smile/",
+							"RATING_TYPE" => "standart",
+							"SHOW_DEACTIVATED" => "N",
+							"SHOW_RATING" => "Y",
+							"SHOW_SPAM" => "Y",
+							"TEMPLATE_THEME" => "blue",
+							"URL_TO_COMMENT" => "",
+							"VK_USE" => "N",
+							"WIDTH" => ""
+						)
+					);?>
+
 			<div class="cart_sidebar">
 				<div class="certificates">
 					<div class="certificates_title">Сертификаты: </div>
 					<div class="certificates_list">
 
 						<?
-								$certificate = CIBlockElement::GetProperty($arResult['IBLOCK_ID'], $arResult['ID'], Array(), Array("CODE" => "CERTIFICATES"));
-								while($c = $certificate->fetch()):
-							?>
+									$certificate = CIBlockElement::GetProperty($arResult['IBLOCK_ID'], $arResult['ID'], Array(), Array("CODE" => "CERTIFICATES"));
+									while($c = $certificate->fetch()):
+								?>
 						<a href="<?= CFile::GetPath($c['VALUE']) ?>" data-fancybox-group="gallery2" class="certificates_item fancybox"><img src="<?= CFile::GetPath($c['VALUE']) ?>" alt=""></a>
 						<?
-								endwhile;
-							?>
+									endwhile;
+								?>
 
 					</div>
 				</div>
 			</div>
+
+			<?}?>
+
 		</div>
+		<?if($arParams['USE_AJAX'] == "Y") {?>
+
+		<div class="cart_tabs_more btn_more">Подробнее</div>
+
+		<?}?>
 	</div>
+
 </div>
 </div>
+<?if($arParams['USE_AJAX'] == "y") die();?>
 
-<?endforeach;?>
 
-
-<?endwhile;?>
+<?}?>
+<?}?>

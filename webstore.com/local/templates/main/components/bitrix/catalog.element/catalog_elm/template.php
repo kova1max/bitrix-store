@@ -97,12 +97,14 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 	header("Location: " . $_SERVER['REDIRECT_SCRIPT_URI']);
 }
 
-
 ?>
 
-<?if($_REQUEST['use_ajax'] == y) $APPLICATION->RestartBuffer();?>
-
+<?if($arParams['USE_AJAX'] != "Y") {?>
 <div class="container">
+	<?} else {?>
+	<div id="modal_cart" class="modal hidden_modal" style="display: block;">
+		<div class="modal_title"><?=$arResult['NAME'] . " " . $arResult['OFFERS'][0]['PROPERTIES']['SIZE']['VALUE']?> <?echo $arResult['PROPERTIES']['CML2_ARTICLE']['VALUE'] != "" ? "(" . $arResult['PROPERTIES']['CML2_ARTICLE']['VALUE'] . ")" : "" ?><a href="" class="fancybox-close"></a></div>
+	<?}?>
 
 	<div class="cart">
 		<div class="cart_item">
@@ -114,15 +116,15 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 								<img src="<?= $arResult['DEFAULT_PICTURE']['SRC'] ?>" title="No pictures added yet" alt="">
 							</a>
 						</div>
-						<? if ($arResult['OFFERS'][0]['MORE_PHOTO_COUNT']) : ?>
-						<? for ($i = 0; $i < $arResult['OFFERS'][0]['MORE_PHOTO_COUNT']; $i++) : ?>
-						<div class="swiper-slide">
-							<a href="" data-fancybox-group="gallery1" class="fancybox">
-								<img src="<?= $arResult['OFFERS'][0]['MORE_PHOTO'][$i]['SRC'] ?>" alt="">
-							</a>
-						</div>
-						<? endfor; ?>
-						<? endif; ?>
+						<? if ($arResult['OFFERS'][0]['MORE_PHOTO_COUNT']) { ?>
+							<? for ($i = 0; $i < $arResult['OFFERS'][0]['MORE_PHOTO_COUNT']; $i++) { ?>
+								<div class="swiper-slide">
+									<a href="" data-fancybox-group="gallery1" class="fancybox">
+										<img src="<?= $arResult['OFFERS'][0]['MORE_PHOTO'][$i]['SRC'] ?>" alt="">
+									</a>
+								</div>
+							<? } ?>
+						<? } ?>
 
 					</div>
 					<div class="cart_gallery_zoom"><i class="svg-glass"></i></div>
@@ -135,13 +137,13 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 							<div class="swiper-slide">
 								<img src="<?= $arResult['DEFAULT_PICTURE']['SRC'] ?>" title="No pictures added yet" alt="">
 							</div>
-							<? if ($arResult['OFFERS'][0]['MORE_PHOTO_COUNT']) : ?>
-							<? for ($i = 0; $i < $arResult['OFFERS'][0]['MORE_PHOTO_COUNT']; $i++) : ?>
-							<div class="swiper-slide">
-								<img src="<?= $arResult['OFFERS'][0]['MORE_PHOTO'][$i]['SRC'] ?>" alt="">
-							</div>
-							<? endfor; ?>
-							<? endif; ?>
+							<? if ($arResult['OFFERS'][0]['MORE_PHOTO_COUNT']) { ?>
+								<? for ($i = 0; $i < $arResult['OFFERS'][0]['MORE_PHOTO_COUNT']; $i++) { ?>
+								<div class="swiper-slide">
+									<img src="<?= $arResult['OFFERS'][0]['MORE_PHOTO'][$i]['SRC'] ?>" alt="">
+								</div>
+								<? } ?>
+							<? } ?>
 
 						</div>
 					</div>
@@ -157,7 +159,6 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 				<div class="cart_info_top">
 
 					<!-- RATING -->
-
 					<div class="cart_info_rating">
 						<?if($_COOKIE['comments_rating'] > 0):?>
 						<div class="cart_info_star">
@@ -169,11 +170,10 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 							<?endfor;?>
 						</div>
 						<?endif;?>
-						<a href="#" class="cart_info_reviews"><?= $_COOKIE['comments_count'] ?> отзывов</a>
+						<a href="#" class="cart_info_reviews"><?= $arResult['PROPERTIES']['BLOG_COMMENTS_CNT']['VALUE'] ?> отзыв(ов)</a>
 					</div>
 
 					<!-- WISH LIST -->
-
 					<div class="cart_info_wishlist">
 						<i class="svg-heart"></i><span><?= $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] ?> людей добавили <a href="#">в избранное</a></span>
 					</div>
@@ -195,6 +195,7 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 					</select>
 					<span>Артикул <?= $arResult['PROPERTIES']['CML2_ARTICLE']['VALUE'] ?></span>
 				</div>
+
 				<div class="cart_info_bottom">
 					<div class="cart_info_item">
 
@@ -255,14 +256,12 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 		</div>
 	</div>
+	
+
+<?if($arParams['USE_AJAX'] != "Y") {?>
+
 </div>
-
-<?if($_REQUEST['use_ajax'] == y) die();?>
-
-
-<!-- КОМПЛЕКТ -->
-
-<?if($elms->result->num_rows):?>
+<?if($elms->result->num_rows) {?>
 
 <div class="cheaper">
 	<div class="container">
@@ -272,8 +271,8 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 				<div class="swiper-wrapper">
 
 					<? while( $set = $elms->fetch() ){ 
-						$count = 0;
-					?>
+								$count = 0;
+							?>
 
 					<?$set = CCatalogProductSet::getSetByID( $set['SET_ID'] );?>
 
@@ -282,23 +281,23 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 						<? foreach($set['ITEMS'] as $offer) { ?>
 						<?
 
-								unset($prices);
-								$product = CCatalogProduct::GetByIDEx( $offer['ITEM_ID'], false );
-								$price = CCatalogProduct::GetOptimalPrice($offer['ITEM_ID'], $offer['QUANTITY'], false, "N", false);
-								$outPrice = CurrencyFormat(CCatalogProduct::GetOptimalPrice($set['OWNER_ID'], $offer['QUANTITY'], false, "N", false)['DISCOUNT_PRICE'], 'RUB');
+										unset($prices);
+										$product = CCatalogProduct::GetByIDEx( $offer['ITEM_ID'], false );
+										$price = CCatalogProduct::GetOptimalPrice($offer['ITEM_ID'], $offer['QUANTITY'], false, "N", false);
+										$outPrice = CurrencyFormat(CCatalogProduct::GetOptimalPrice($set['OWNER_ID'], $offer['QUANTITY'], false, "N", false)['DISCOUNT_PRICE'], 'RUB');
 
-								// GETTING CALCULATED PRICE 
-								$price = $price['RESULT_PRICE']['BASE_PRICE'] == $price['RESULT_PRICE']['DISCOUNT_PRICE'] ? $price['RESULT_PRICE']['BASE_PRICE'] : $price['RESULT_PRICE']['DISCOUNT_PRICE'];
-								
-								$product['PREVIEW_PICTURE'] = !$product['PREVIEW_PICTURE'] ? CCatalogProduct::GetByIDEx( $product['PROPERTIES']['CML2_LINK']['VALUE'], true )['PREVIEW_PICTURE'] : 0;
-								$parentID = CCatalogSku::GetProductInfo($offer['ITEM_ID'])['ID'];
-								$prices = array(
-									'OLD_PRICE' => CurrencyFormat($price, 'RUB'),
-									'DISCOUNT_PRICE' => CurrencyFormat($price - ($price * $offer['DISCOUNT_PERCENT'] / 100), 'RUB'),
-									'SALE' => $offer['DISCOUNT_PERCENT']
-								);
+										// GETTING CALCULATED PRICE 
+										$price = $price['RESULT_PRICE']['BASE_PRICE'] == $price['RESULT_PRICE']['DISCOUNT_PRICE'] ? $price['RESULT_PRICE']['BASE_PRICE'] : $price['RESULT_PRICE']['DISCOUNT_PRICE'];
+										
+										$product['PREVIEW_PICTURE'] = !$product['PREVIEW_PICTURE'] ? CCatalogProduct::GetByIDEx( $product['PROPERTIES']['CML2_LINK']['VALUE'], true )['PREVIEW_PICTURE'] : 0;
+										$parentID = CCatalogSku::GetProductInfo($offer['ITEM_ID'])['ID'];
+										$prices = array(
+											'OLD_PRICE' => CurrencyFormat($price, 'RUB'),
+											'DISCOUNT_PRICE' => CurrencyFormat($price - ($price * $offer['DISCOUNT_PERCENT'] / 100), 'RUB'),
+											'SALE' => $offer['DISCOUNT_PERCENT']
+										);
 
-							?>
+									?>
 
 						<div class="cheaper_item">
 							<a href="#" class="cheaper_item_img"><img src="<?= CFile::GetPath($product['PREVIEW_PICTURE']) ?>" alt="PRODUCT IMG"></a>
@@ -316,8 +315,8 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 						<?if(!$count){?>
 						<div class="cheaper_item_operation">+</div>
 						<?}
-								$count++;
-							}?>
+										$count++;
+									}?>
 
 						<div class="cheaper_item_operation">=</div>
 
@@ -338,118 +337,5 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 		<div class="swiper-pagination"></div>
 	</div>
 </div>
-<?endif;?>
-
-<div id="modal_5" class="modal hidden_modal">
-	<div class="modal_title">Купить в один клик<a href="" class="fancybox-close"></a></div>
-	<table class="basket_formed_list">
-		<tr>
-			<td class="basket_dell"><a href="#" class=""><i class="svg-cancel-o"></i></a></td>
-			<td class="basket_img">
-				<a href="#"><img src="img/catalog_1.jpg" alt=""></a>
-			</td>
-			<td class="basket_name">
-				<a href="#">Матрас Венето Family Style 120х190 см </a>
-				<select class="select">
-					<option value="">115x210 - 8 500 руб</option>
-					<option value="">115x210 - 8 500 руб</option>
-				</select>
-			</td>
-			<td class="basket_count_w">
-				<div class="basket_count">
-					<div class="basket_count_btn basket_count_minus">−</div>
-					<input type="text" class="basket_count_val" readonly value="1">
-					<div class="basket_count_btn basket_count_plus">+</div>
-				</div>
-			</td>
-			<td class="basket_price">8 500 руб</td>
-		</tr>
-	</table>
-	<div class="basket_info">
-		<label>Имя<input type="text"></label>
-		<label>Телефон<input type="text"></label>
-		<label>Ваш e-mail<input type="text"></label>
-		<div class="basket_info_bottom">
-			<a href="#" class="btn">Купить</a>
-			<p>Наш оператор свяжется с Вами в течение часа</p>
-		</div>
-	</div>
-	<div class="cheaper">
-		<div class="cheaper_swiper">
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<div class="cheaper_item">
-							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
-							<div class="cheaper_item_content">
-								<a href="#">Матрас Венето Family Style 120х190 см </a>
-								<span>8 500 руб.</span>
-							</div>
-						</div>
-						<div class="cheaper_item_operation">+</div>
-						<div class="cheaper_item">
-							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
-							<div class="cheaper_item_content">
-								<a href="#">Матрас Венето Family Style 120х190 см </a>
-								<span class="cheaper_item_old">10 500 руб</span>
-								<span>8 500 руб.</span>
-							</div>
-						</div>
-						<div class="cheaper_item_operation">=</div>
-						<div class="cheaper_item_cheaper">
-							<span>15 000 руб</span>
-							<a href="#" class="btn btn_blue">Купить комплект</a>
-						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="cheaper_item">
-							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
-							<div class="cheaper_item_content">
-								<a href="#">Матрас Венето Family Style 120х190 см </a>
-								<span>8 500 руб.</span>
-							</div>
-						</div>
-						<div class="cheaper_item_operation">+</div>
-						<div class="cheaper_item">
-							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
-							<div class="cheaper_item_content">
-								<a href="#">Матрас Венето Family Style 120х190 см </a>
-								<span class="cheaper_item_old">10 500 руб</span>
-								<span>8 500 руб.</span>
-							</div>
-						</div>
-						<div class="cheaper_item_operation">=</div>
-						<div class="cheaper_item_cheaper">
-							<span>15 000 руб</span>
-							<a href="#" class="btn btn_blue">Купить комплект</a>
-						</div>
-					</div>
-					<div class="swiper-slide">
-						<div class="cheaper_item">
-							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
-							<div class="cheaper_item_content">
-								<a href="#">Матрас Венето Family Style 120х190 см </a>
-								<span>8 500 руб.</span>
-							</div>
-						</div>
-						<div class="cheaper_item_operation">+</div>
-						<div class="cheaper_item">
-							<a href="#" class="cheaper_item_img"><img src="img/product_item_1.jpg" alt=""></a>
-							<div class="cheaper_item_content">
-								<a href="#">Матрас Венето Family Style 120х190 см </a>
-								<span class="cheaper_item_old">10 500 руб</span>
-								<span>8 500 руб.</span>
-							</div>
-						</div>
-						<div class="cheaper_item_operation">=</div>
-						<div class="cheaper_item_cheaper">
-							<span>15 000 руб</span>
-							<a href="#" class="btn btn_blue">Купить комплект</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="swiper-pagination"></div>
-	</div>
-</div>
+<?}?>
+<?}?>

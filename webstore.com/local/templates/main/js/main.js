@@ -14,18 +14,27 @@ function submitForm(form, type = false){
 
 }
 
-// $('.news_tabs_nav a').click(function (e) {
-
-//     if(!$(this).data('disabled')) {
-//         e.preventDefault();
-//         var $this= $(this),
-//         item = $this.data('tabs'),
-//         container = $this.closest('.cart_tabs');
-//         $this.addClass('active').siblings().removeClass('active');
-//         container.find('.cart_tabs_item[data-tabs="' + item + '"]').addClass('active').siblings().removeClass('active');
-//     }
+$(document).on("click", '.cart_tabs_more', function() {
+    $(this).closest('.cart_tabs').removeClass('hide');
+})
     
-// });
+$('.fancymodal2').on('click', function(event) {
+
+    event.preventDefault();
+
+    $.fancybox({
+        padding: 0,
+        maxWidth: 930,
+        width: '99%',
+        type: 'ajax',
+        'closeBtn': false,
+        'href': $(this).data('src'),
+        autoHeight: true,
+        afterShow: function(current, previous) {
+        }
+    });
+
+});
 
 $(document).ready(function(){
 
@@ -435,32 +444,10 @@ $(function() {
         }
     });
 
-    
-    $('a.fancymodal2').on('click', function(event) {
-
-        event.preventDefault();
-        $.fancybox({
-            padding: 0,
-            maxWidth: 930,
-            width: '99%',
-            type: 'ajax',
-            'closeBtn': false,
-            'href': $(this).data('src'),
-            autoHeight: true,
-            afterShow: function(current, previous) {
-            }
-        });
-
-
-    });
-
     $('.modal .fancybox-close').on('click', function(e) {
         e.preventDefault();
         $.fancybox.close();
     });
-
-
-
 
     $('.slider_nav, .slider_more').click(function(e) {
         e.preventDefault();
@@ -508,10 +495,6 @@ $(function() {
     $('.filter_item_more').click(function(e) {
         e.preventDefault();
         $(this).addClass('active');
-    });
-
-    $('.cart_tabs_more').click(function() {
-        $(this).closest('.cart_tabs').removeClass('hide');
     });
 
     $('.filter_head').click(function() {

@@ -182,7 +182,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 						</span>
 					</a>
 
-					<a class="fancymodal2 header_item header_basket active" data-src="/personal/order/make?use_ajax=y" data-fancybox="" data-type="ajax">
+					<a class="fancymodal2 header_item header_basket active" data-src="<?echo $basket['QUANTITY'] > 0 ? '/personal/order/make?use_ajax=y' : '/personal/cart/?use_ajax=y'?>" data-fancybox="" data-type="ajax">
 						<?if($basket['QUANTITY'] > 0) {?>
 							<span class="header_item_icon" >
 								<i class="svg-basket"></i>

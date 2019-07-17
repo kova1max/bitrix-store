@@ -5,7 +5,7 @@
 	$APPLICATION->SetTitle("Корзина");
 	$APPLICATION->IncludeComponent(
 		"bitrix:sale.basket.basket",
-		"",
+		"my-basket",
 		Array(
 			"AJAX_MODE" => "N",
 			"AJAX_OPTION_ADDITIONAL" => "",
