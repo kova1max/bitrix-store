@@ -435,16 +435,23 @@ $(function() {
         }
     });
 
+    
+    $('a.fancymodal2').on('click', function(event) {
 
-    $(".fancymodal2").fancybox({
-        padding: 0,
-        maxWidth: 930,
-        width: '99%',
-        type: 'ajax',
-        'closeBtn': false,
-        autoHeight: true,
-        afterShow: function(current, previous) {
-        }
+        event.preventDefault();
+        $.fancybox({
+            padding: 0,
+            maxWidth: 930,
+            width: '99%',
+            type: 'ajax',
+            'closeBtn': false,
+            'href': $(this).data('src'),
+            autoHeight: true,
+            afterShow: function(current, previous) {
+            }
+        });
+
+
     });
 
     $('.modal .fancybox-close').on('click', function(e) {
