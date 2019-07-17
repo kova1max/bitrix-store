@@ -7,6 +7,10 @@ $context = Main\Application::getInstance()->getContext();
 $request = $context->getRequest();
 $server = $context->getServer();
 
+
+// FIXME: Отримати DELIVERY
+$delivery = 100;
+
 if(is_array($arResult['JS_DATA']['COUPON_LIST'])) {
 	$arResult['COUPON_ACTIVE']=end($arResult['JS_DATA']['COUPON_LIST']);
 	$arResult['COUPON_ACTIVE']=$arResult['COUPON_ACTIVE']['COUPON'];
@@ -29,8 +33,12 @@ else {
 
 ?>
 
-<?if($_REQUEST['use_ajax'] == "y") $APPLICATION->RestartBuffer();?>
+<?if($_REQUEST['use_ajax'] == "y") {
+ 	$APPLICATION->RestartBuffer();?>
+	<div class="modal_title">Корзина<a href="" class="fancybox-close"></a></div>
+<?}?>
 
+<!-- FIXME: Неправильная обрабока формы в modal (onsubmit) -->
 <form action="<?= $APPLICATION->GetCurPage(); ?>" method="POST" name="ORDER_FORM" id="ORDER_FORM" onsubmit="submitForm(this); return false;">
 
 
@@ -57,7 +65,9 @@ else {
 	}
 	?>
 
-	<div class="container" <?if($_REQUEST['ajax_request'] == 0) echo 'style="margin-top: 20px"'?>>
+	<? if($_REQUEST['use_ajax'] !== "y") { ?>
+
+	<div class="container">
 
 		<div class="order">
 			<div class="order_row order_formed">
@@ -65,28 +75,86 @@ else {
 					Ваш заказ:
 					<a href="#" class="order_edit">Редактировать заказ</a>
 				</div>
-				<table class="order_formed_list">
+	<?}?>
+
+				<table class="<?echo $_REQUEST['use_ajax'] == "y" ? 'basket_formed_list' : 'order_formed_list'?>">
 
 					<!-- ORDER ITEMS -->
 
 					<?foreach($arResult['JS_DATA']['GRID']['ROWS'] as $arItem){?>
 
-						<tr>
-							<td class="order_img"><a href="#"><img src="<?= $arItem['data']['PREVIEW_PICTURE_SRC'] ?>" alt=""></a></td>
-							<td class="order_name"><a href="#"><?= $arItem['data']['NAME'] ?> </a></td>
-							<td class="order_count"><?= $arItem['data']['QUANTITY'] ?> шт.</td>
-							<td class="order_price"><?= $arItem['data']['SUM_BASE_FORMATED'] ?></td>
-						</tr>
+						<?
+
+							// GETTING OFFERS OF PRODUCT (PARENT OF CURRENT OFFER)
+							$productID = CCatalogSku::GetProductInfo($arItem['data']['PRODUCT_ID'])['ID'];
+							$arOffers = CCatalogSKU::getOffersList(
+								$productID,
+								0,
+								array(),
+								array('*'),
+								array()
+							);
+
+						?>
+
+						<?if($_REQUEST['use_ajax'] == "y") {?>
+
+							<tr>
+								<td class="basket_dell"><a href="#" class=""><i class="svg-cancel-o"></i></a></td>
+								<td class="basket_img">
+									<a href="#"><img src="<?= $arItem['data']['PREVIEW_PICTURE_SRC'] ?>" alt=""></a>
+								</td>
+								<td class="basket_name">
+									<a href="#"><?= $arItem['data']['NAME'] ?> </a>
+									<select class="select">
+										<?foreach($arOffers[$productID] as $arOffer) {?>
+
+											<?if($arOffers[$productID]) {?>
+										
+												<option><?=$arOffer['NAME']?></option>
+
+											<?} else {?>
+
+												<option>No more offers added yet</option>
+											
+											<?}?>
+										
+										<?}?>
+
+									</select>
+								</td>
+								<td class="basket_count_w">
+									<div class="basket_count">
+										<div class="basket_count_btn basket_count_minus">−</div>
+										<input type="text" class="basket_count_val" readonly value="<?= $arItem['data']['QUANTITY'] ?>">
+										<div class="basket_count_btn basket_count_plus">+</div>
+									</div>
+								</td>
+								<td class="basket_price"><?= $arItem['data']['SUM_BASE_FORMATED'] ?></td>
+							</tr>
+
+						<?} else {?>
+
+							<tr>
+								<td class="order_img"><a href="#"><img src="<?= $arItem['data']['PREVIEW_PICTURE_SRC'] ?>" alt=""></a></td>
+								<td class="order_name"><a href="#"><?= $arItem['data']['NAME'] ?> </a></td>
+								<td class="order_count"><?= $arItem['data']['QUANTITY'] ?> шт.</td>
+								<td class="order_price"><?= $arItem['data']['SUM_BASE_FORMATED'] ?></td>
+							</tr>
+
+						<?}?>
 
 					<?}?>
 
 				</table>
+				
+<?if($_REQUEST['use_ajax'] !== "y"){?>
 
 				<div class="order_total">
 					<div class="order_total_title">Итого:</div>
 					<div class="order_total_item"><?= count($arResult['JS_DATA']['GRID']['ROWS']) ?> товар(ов) на суму: <strong><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'], 'RUB') ?></strong></div>
 					<div class="order_total_item">Стоимость доставки: 
-						<strong><?= 100 ?> руб.</strong>
+						<strong><?= $delivery ?> руб.</strong>
 					</div>
 				</div>
 
@@ -144,9 +212,96 @@ else {
 				</div>
 
 			</div>
-		</div>
 
+		</div>
 	</div>
+
+<?} else {?>
+
+	<div class="basket_formed">
+        <a href="/catalog/" class="btn_more">Продолжить покупки</a>
+        <div class="basket_formed_total">
+            Итого <span><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'], 'RUB') ?></span>
+            <a href="#" class="btn">Оформить заказ</a>
+        </div>
+	</div>
+	
+	<div class="cheaper">
+	<div class="container">
+		<div class="title_under">Вместе дешевле</div>
+		<div class="cheaper_swiper">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+
+					<? while( $set = $elms->fetch() ){ 
+						$count = 0;
+					?>
+
+					<?$set = CCatalogProductSet::getSetByID( $set['SET_ID'] );?>
+
+					<div class="swiper-slide">
+
+						<? foreach($set['ITEMS'] as $offer) { ?>
+						<?
+
+								unset($prices);
+								$product = CCatalogProduct::GetByIDEx( $offer['ITEM_ID'], false );
+								$price = CCatalogProduct::GetOptimalPrice($offer['ITEM_ID'], $offer['QUANTITY'], false, "N", false);
+								$outPrice = CurrencyFormat(CCatalogProduct::GetOptimalPrice($set['OWNER_ID'], $offer['QUANTITY'], false, "N", false)['DISCOUNT_PRICE'], 'RUB');
+
+								// GETTING CALCULATED PRICE 
+								$price = $price['RESULT_PRICE']['BASE_PRICE'] == $price['RESULT_PRICE']['DISCOUNT_PRICE'] ? $price['RESULT_PRICE']['BASE_PRICE'] : $price['RESULT_PRICE']['DISCOUNT_PRICE'];
+								
+								$product['PREVIEW_PICTURE'] = !$product['PREVIEW_PICTURE'] ? CCatalogProduct::GetByIDEx( $product['PROPERTIES']['CML2_LINK']['VALUE'], true )['PREVIEW_PICTURE'] : 0;
+								$parentID = CCatalogSku::GetProductInfo($offer['ITEM_ID'])['ID'];
+								$prices = array(
+									'OLD_PRICE' => CurrencyFormat($price, 'RUB'),
+									'DISCOUNT_PRICE' => CurrencyFormat($price - ($price * $offer['DISCOUNT_PERCENT'] / 100), 'RUB'),
+									'SALE' => $offer['DISCOUNT_PERCENT']
+								);
+
+							?>
+
+						<div class="cheaper_item">
+							<a href="#" class="cheaper_item_img"><img src="<?= CFile::GetPath($product['PREVIEW_PICTURE']) ?>" alt="PRODUCT IMG"></a>
+							<div class="cheaper_item_content">
+								<a href="<?= '/catalog/' . $arParams['SECTION_ID'] . '/' . $parentID . '/' ?>"><?= $product['NAME'] ?></a>
+
+								<?if($prices['SALE']):?>
+								<span class="cheaper_item_old"><?= $prices['OLD_PRICE'] ?></span>
+								<?endif;?>
+								<span><?= $prices['DISCOUNT_PRICE'] ?></span>
+
+							</div>
+						</div>
+
+						<?if(!$count){?>
+						<div class="cheaper_item_operation">+</div>
+						<?}
+								$count++;
+							}?>
+
+						<div class="cheaper_item_operation">=</div>
+
+						<div class="cheaper_item_cheaper">
+							<span><?= $outPrice ?></span>
+							<a href="?action=ADD2BASKET&id=<?= $set['OWNER_ID']; ?>" class="btn btn_blue">Купить комплект</a>
+						</div>
+
+					</div>
+
+					<?}?>
+
+				</div>
+			</div>
+			<div class="swiper-button-next"><i class="svg-next-2"></i></div>
+			<div class="swiper-button-prev"><i class="svg-next-2"></i></div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+</div>
+
+<?}?>
 
 </form>
 
