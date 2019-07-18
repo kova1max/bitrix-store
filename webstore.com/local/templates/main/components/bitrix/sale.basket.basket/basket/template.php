@@ -15,7 +15,6 @@ use Bitrix\Main\Localization\Loc;
  * @var CBitrixComponentTemplate $this
  * @var array $giftParameters
  */
-
 $delivery = 300;
 
 ?>

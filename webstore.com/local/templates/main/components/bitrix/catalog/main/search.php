@@ -11,6 +11,8 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 
+$APPLICATION->SetTitle('Поиск по каталогу');
+
 
 if ($arParams["USE_COMPARE"]=="Y")
 {

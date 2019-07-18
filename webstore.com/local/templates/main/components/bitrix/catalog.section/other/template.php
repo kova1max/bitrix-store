@@ -32,16 +32,17 @@ $this->addExternalCss('/bitrix/css/main/bootstrap.css');
 			<div class="swiper-container">
 				<div class="swiper-wrapper -product_list">
 
-					<?if (!empty($arResult['ITEMS']) && !empty($arResult['ITEM_ROWS'])):?>
-						<?foreach($arResult['ITEMS'] as $arItem):?>
+					<?if (!empty($arResult['ITEMS']) && !empty($arResult['ITEM_ROWS'])) {?>
+
+						<?foreach($arResult['ITEMS'] as $arItem) {?>
 							
-							<?if(($arItem['CATALOG_TYPE'] != 2) && ($arItem['ID'] != $_REQUEST['ELEMENT_ID'])):?>
+							<?if(($arItem['CATALOG_TYPE'] != 2) && ($arItem['ID'] != $_REQUEST['ELEMENT_ID'])) {?>
 							<? 
 								$price = CCatalogProduct::GetOptimalPrice( $arItem['ID'], 1, array(), "N", array(), false, false );
 								$curr = $price['PRICE']['CURRENCY'];
 							?>
 
-								<div class="product_item swiper-slide">
+								<div class="product_item swiper-slide swiper-slide-active" style="width: 280px; margin-right: 20px;">
 
 									<?if($arItem['PRICE']['DISCOUNT']):?>
 										<div class="product_item_prom">
@@ -71,9 +72,9 @@ $this->addExternalCss('/bitrix/css/main/bootstrap.css');
 
 								</div>
 
-							<?endif;?>
-						<?endforeach;?>
-					<?endif;?>
+							<?}?>
+						<?}?>
+					<?}?>
 
 				</div>
 			</div>

@@ -182,7 +182,7 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 						</span>
 					</a>
 
-					<a class="fancymodal2 header_item header_basket active" data-src="<?echo $basket['QUANTITY'] > 0 ? '/personal/order/make?use_ajax=y' : '/personal/cart/?use_ajax=y'?>" data-fancybox="" data-type="ajax">
+					<a class="fancymodal2 header_item header_basket active" data-src="<?echo $basket['QUANTITY'] > 0 ? '/personal/order/make/?use_ajax=y' : '/personal/cart/?use_ajax=y'?>" data-fancybox="" data-type="ajax">
 						<?if($basket['QUANTITY'] > 0) {?>
 							<span class="header_item_icon" >
 								<i class="svg-basket"></i>
@@ -208,26 +208,29 @@ foreach($_SESSION['CATALOG_COMPARE_LIST'] as $compare){
 		</div>
 	</div>
 	<?
-	$APPLICATION->IncludeComponent(
-		"bitrix:menu",
-		"custom_menu",
-		array(
-			"ALLOW_MULTI_SELECT" => "N",
-			"CHILD_MENU_TYPE" => "left",
-			"COMPONENT_TEMPLATE" => "custom_menu",
-			"DELAY" => "N",
-			"MAX_LEVEL" => "2",
-			"MENU_CACHE_GET_VARS" => array(),
-			"MENU_CACHE_TIME" => "3600",
-			"MENU_CACHE_TYPE" => "Y",
-			"MENU_CACHE_USE_GROUPS" => "N",
-			"ROOT_MENU_TYPE" => "top",
-			"USE_EXT" => "Y"
-		),
-		false
-	);
-	?>
-	<? if ($APPLICATION->GetCurDir() != '/') { ?>
+	
+	if($_REQUEST['ajax']!='y') {
+		$APPLICATION->IncludeComponent(
+			"bitrix:menu",
+			"custom_menu",
+			array(
+				"ALLOW_MULTI_SELECT" => "N",
+				"CHILD_MENU_TYPE" => "left",
+				"COMPONENT_TEMPLATE" => "custom_menu",
+				"DELAY" => "N",
+				"MAX_LEVEL" => "2",
+				"MENU_CACHE_GET_VARS" => array(),
+				"MENU_CACHE_TIME" => "3600",
+				"MENU_CACHE_TYPE" => "Y",
+				"MENU_CACHE_USE_GROUPS" => "N",
+				"ROOT_MENU_TYPE" => "top",
+				"USE_EXT" => "Y"
+			),
+			false
+		);
+	}
+	
+	if ($APPLICATION->GetCurDir() != '/') { ?>
 		<div class="container">
 			<?
 				$APPLICATION->IncludeComponent(

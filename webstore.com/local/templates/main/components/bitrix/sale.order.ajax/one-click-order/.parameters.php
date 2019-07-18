@@ -1,11 +1,7 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
-use Bitrix\Main\Loader;
-use Bitrix\Catalog;
-use Bitrix\Iblock;
-
-if (!Loader::includeModule('sale'))
+if (!Bitrix\Main\Loader::includeModule('sale'))
 	return;
 
 $arThemes = array();
@@ -119,6 +115,27 @@ $arTemplateParameters = array(
 		"DEFAULT" => "N",
 		"PARENT" => "VISUAL",
 	),
+	"SHOW_COUPONS_BASKET" => array(
+		"NAME" => GetMessage("SHOW_COUPONS_BASKET"),
+		"TYPE" => "CHECKBOX",
+		"MULTIPLE" => "N",
+		"DEFAULT" => "Y",
+		"PARENT" => "VISUAL",
+	),
+	"SHOW_COUPONS_DELIVERY" => array(
+		"NAME" => GetMessage("SHOW_COUPONS_DELIVERY"),
+		"TYPE" => "CHECKBOX",
+		"MULTIPLE" => "N",
+		"DEFAULT" => "Y",
+		"PARENT" => "VISUAL",
+	),
+	"SHOW_COUPONS_PAY_SYSTEM" => array(
+		"NAME" => GetMessage("SHOW_COUPONS_PAY_SYSTEM"),
+		"TYPE" => "CHECKBOX",
+		"MULTIPLE" => "N",
+		"DEFAULT" => "Y",
+		"PARENT" => "VISUAL",
+	),
 	"SHOW_NEAREST_PICKUP" => array(
 		"NAME" => GetMessage("SHOW_NEAREST_PICKUP"),
 		"TYPE" => "CHECKBOX",
@@ -130,14 +147,14 @@ $arTemplateParameters = array(
 		"NAME" => GetMessage("DELIVERIES_PER_PAGE"),
 		"TYPE" => "STRING",
 		"MULTIPLE" => "N",
-		"DEFAULT" => "9",
+		"DEFAULT" => "8",
 		"PARENT" => "VISUAL",
 	),
 	"PAY_SYSTEMS_PER_PAGE" => array(
 		"NAME" => GetMessage("PAY_SYSTEMS_PER_PAGE"),
 		"TYPE" => "STRING",
 		"MULTIPLE" => "N",
-		"DEFAULT" => "9",
+		"DEFAULT" => "8",
 		"PARENT" => "VISUAL",
 	),
 	"PICKUPS_PER_PAGE" => array(
@@ -145,13 +162,6 @@ $arTemplateParameters = array(
 		"TYPE" => "STRING",
 		"MULTIPLE" => "N",
 		"DEFAULT" => "5",
-		"PARENT" => "VISUAL",
-	),
-	"SHOW_PICKUP_MAP" => array(
-		"NAME" => GetMessage("SHOW_PICKUP_MAP"),
-		"TYPE" => "CHECKBOX",
-		"MULTIPLE" => "N",
-		"DEFAULT" => "Y",
 		"PARENT" => "VISUAL",
 	),
 	"SHOW_MAP_IN_PROPS" => array(
@@ -162,17 +172,6 @@ $arTemplateParameters = array(
 		"REFRESH" => "Y",
 		"PARENT" => "VISUAL",
 	),
-	"PICKUP_MAP_TYPE" => array(
-		"NAME" => GetMessage("PICKUP_MAP_TYPE"),
-		"TYPE" => "LIST",
-		"MULTIPLE" => "N",
-		"VALUES" => array(
-			"yandex" => GetMessage("PICKUP_MAP_TYPE_YANDEX"),
-			"google" => GetMessage("PICKUP_MAP_TYPE_GOOGLE")
-		),
-		"DEFAULT" => "yandex",
-		"PARENT" => "VISUAL"
-	),
 	"SERVICES_IMAGES_SCALING" =>  array(
 		"NAME" => GetMessage("SERVICES_IMAGES_SCALING"),
 		"TYPE" => "LIST",
@@ -181,7 +180,6 @@ $arTemplateParameters = array(
 			'adaptive' => GetMessage("SOA_ADAPTIVE"),
 			'no_scale' => GetMessage("SOA_NO_SCALE")
 		),
-		"DEFAULT" => "adaptive",
 		"PARENT" => "ADDITIONAL_SETTINGS"
 	),
 	"PRODUCT_COLUMNS_HIDDEN" => array(
@@ -193,12 +191,6 @@ $arTemplateParameters = array(
 		"VALUES" => array(),
 		"DEFAULT" => array(),
 		"ADDITIONAL_VALUES" => "N",
-		"PARENT" => "ADDITIONAL_SETTINGS"
-	),
-	"HIDE_ORDER_DESCRIPTION" => array(
-		"NAME" => GetMessage("HIDE_ORDER_DESCRIPTION"),
-		"TYPE" => "CHECKBOX",
-		"DEFAULT" => "N",
 		"PARENT" => "ADDITIONAL_SETTINGS"
 	),
 	"ALLOW_USER_PROFILES" => array(
@@ -215,14 +207,6 @@ $arTemplateParameters = array(
 		"HIDDEN" => $arCurrentValues['ALLOW_USER_PROFILES'] !== 'Y' ? 'Y' : 'N',
 		"PARENT" => "BASE"
 	),
-	"SHOW_COUPONS" => array(
-		"NAME" => GetMessage("SHOW_COUPONS"),
-		"TYPE" => "CHECKBOX",
-		"MULTIPLE" => "N",
-		"DEFAULT" => "Y",
-		"REFRESH" => "Y",
-		"PARENT" => "VISUAL",
-	),
 	"USE_YM_GOALS" => array(
 		"NAME" => GetMessage("USE_YM_GOALS1"),
 		"TYPE" => "CHECKBOX",
@@ -231,31 +215,6 @@ $arTemplateParameters = array(
 		"PARENT" => "ANALYTICS_SETTINGS"
 	)
 );
-
-if (!isset($arCurrentValues['SHOW_COUPONS']) || $arCurrentValues['SHOW_COUPONS'] === 'Y')
-{
-	$arTemplateParameters["SHOW_COUPONS_BASKET"] = [
-		"NAME" => GetMessage("SHOW_COUPONS_BASKET"),
-		"TYPE" => "CHECKBOX",
-		"MULTIPLE" => "N",
-		"DEFAULT" => "Y",
-		"PARENT" => "VISUAL",
-	];
-	$arTemplateParameters["SHOW_COUPONS_DELIVERY"] = [
-		"NAME" => GetMessage("SHOW_COUPONS_DELIVERY"),
-		"TYPE" => "CHECKBOX",
-		"MULTIPLE" => "N",
-		"DEFAULT" => "Y",
-		"PARENT" => "VISUAL",
-	];
-	$arTemplateParameters["SHOW_COUPONS_PAY_SYSTEM"] = [
-		"NAME" => GetMessage("SHOW_COUPONS_PAY_SYSTEM"),
-		"TYPE" => "CHECKBOX",
-		"MULTIPLE" => "N",
-		"DEFAULT" => "Y",
-		"PARENT" => "VISUAL",
-	];
-}
 
 if ($arCurrentValues['USE_YM_GOALS'] == 'Y')
 {
@@ -349,113 +308,6 @@ if ($arCurrentValues['USE_YM_GOALS'] == 'Y')
 		"DEFAULT" => "BX-order-save",
 		"PARENT" => "ANALYTICS_SETTINGS"
 	);
-}
-
-$arTemplateParameters['USE_ENHANCED_ECOMMERCE'] = array(
-	'PARENT' => 'ANALYTICS_SETTINGS',
-	'NAME' => GetMessage('USE_ENHANCED_ECOMMERCE'),
-	'TYPE' => 'CHECKBOX',
-	'REFRESH' => 'Y',
-	'DEFAULT' => 'N'
-);
-
-if (isset($arCurrentValues['USE_ENHANCED_ECOMMERCE']) && $arCurrentValues['USE_ENHANCED_ECOMMERCE'] === 'Y')
-{
-	if (Loader::includeModule('catalog'))
-	{
-		$arIblockIDs = array();
-		$arIblockNames = array();
-		$catalogIterator = Catalog\CatalogIblockTable::getList(array(
-			'select' => array('IBLOCK_ID', 'NAME' => 'IBLOCK.NAME'),
-			'order' => array('IBLOCK_ID' => 'ASC')
-		));
-		while ($catalog = $catalogIterator->fetch())
-		{
-			$catalog['IBLOCK_ID'] = (int)$catalog['IBLOCK_ID'];
-			$arIblockIDs[] = $catalog['IBLOCK_ID'];
-			$arIblockNames[$catalog['IBLOCK_ID']] = $catalog['NAME'];
-		}
-		unset($catalog, $catalogIterator);
-
-		if (!empty($arIblockIDs))
-		{
-			$arProps = array();
-			$propertyIterator = Iblock\PropertyTable::getList(array(
-				'select' => array('ID', 'CODE', 'NAME', 'IBLOCK_ID'),
-				'filter' => array('@IBLOCK_ID' => $arIblockIDs, '=ACTIVE' => 'Y', '!=XML_ID' => CIBlockPropertyTools::XML_SKU_LINK),
-				'order' => array('IBLOCK_ID' => 'ASC', 'SORT' => 'ASC', 'ID' => 'ASC')
-			));
-			while ($property = $propertyIterator->fetch())
-			{
-				$property['ID'] = (int)$property['ID'];
-				$property['IBLOCK_ID'] = (int)$property['IBLOCK_ID'];
-				$property['CODE'] = (string)$property['CODE'];
-
-				if ($property['CODE'] == '')
-				{
-					$property['CODE'] = $property['ID'];
-				}
-
-				if (!isset($arProps[$property['CODE']]))
-				{
-					$arProps[$property['CODE']] = array(
-						'CODE' => $property['CODE'],
-						'TITLE' => $property['NAME'].' ['.$property['CODE'].']',
-						'ID' => array($property['ID']),
-						'IBLOCK_ID' => array($property['IBLOCK_ID'] => $property['IBLOCK_ID']),
-						'IBLOCK_TITLE' => array($property['IBLOCK_ID'] => $arIblockNames[$property['IBLOCK_ID']]),
-						'COUNT' => 1
-					);
-				}
-				else
-				{
-					$arProps[$property['CODE']]['ID'][] = $property['ID'];
-					$arProps[$property['CODE']]['IBLOCK_ID'][$property['IBLOCK_ID']] = $property['IBLOCK_ID'];
-
-					if ($arProps[$property['CODE']]['COUNT'] < 2)
-					{
-						$arProps[$property['CODE']]['IBLOCK_TITLE'][$property['IBLOCK_ID']] = $arIblockNames[$property['IBLOCK_ID']];
-					}
-
-					$arProps[$property['CODE']]['COUNT']++;
-				}
-			}
-			unset($property, $propertyIterator, $arIblockNames, $arIblockIDs);
-
-			$propList = array();
-			foreach ($arProps as $property)
-			{
-				$iblockList = '';
-
-				if ($property['COUNT'] > 1)
-				{
-					$iblockList = ($property['COUNT'] > 2 ? ' ( ... )' : ' ('.implode(', ', $property['IBLOCK_TITLE']).')');
-				}
-
-				$propList['PROPERTY_'.$property['CODE']] = $property['TITLE'].$iblockList;
-			}
-			unset($property, $arProps);
-		}
-	}
-
-	$arTemplateParameters['DATA_LAYER_NAME'] = array(
-		'PARENT' => 'ANALYTICS_SETTINGS',
-		'NAME' => GetMessage('DATA_LAYER_NAME'),
-		'TYPE' => 'STRING',
-		'DEFAULT' => 'dataLayer'
-	);
-
-	if (!empty($propList))
-	{
-		$arTemplateParameters['BRAND_PROPERTY'] = array(
-			'PARENT' => 'ANALYTICS_SETTINGS',
-			'NAME' => GetMessage('BRAND_PROPERTY'),
-			'TYPE' => 'LIST',
-			'MULTIPLE' => 'N',
-			'DEFAULT' => '',
-			'VALUES' => array('' => '') + $propList
-		);
-	}
 }
 
 if ($arCurrentValues['SHOW_MAP_IN_PROPS'] == 'Y')
@@ -632,18 +484,6 @@ $arTemplateParameters["USE_CUSTOM_ADDITIONAL_MESSAGES"] =  array(
 
 if ($arCurrentValues['USE_CUSTOM_ADDITIONAL_MESSAGES'] == 'Y')
 {
-	$arTemplateParameters["MESS_PRICE_FREE"] =  array(
-		"NAME" => GetMessage("PRICE_FREE"),
-		"TYPE" => "STRING",
-		"DEFAULT" => GetMessage("PRICE_FREE_DEFAULT"),
-		"PARENT" => "ADDITIONAL_MESSAGE_SETTINGS"
-	);
-	$arTemplateParameters["MESS_ECONOMY"] =  array(
-		"NAME" => GetMessage("ECONOMY"),
-		"TYPE" => "STRING",
-		"DEFAULT" => GetMessage("ECONOMY_DEFAULT"),
-		"PARENT" => "ADDITIONAL_MESSAGE_SETTINGS"
-	);
 	$arTemplateParameters["MESS_REGISTRATION_REFERENCE"] =  array(
 		"NAME" => GetMessage("REGISTRATION_REFERENCE"),
 		"TYPE" => "STRING",
@@ -774,12 +614,6 @@ if ($arCurrentValues['USE_CUSTOM_ERROR_MESSAGES'] == 'Y')
 		"NAME" => GetMessage("DELIVERY_CALC_ERROR_TEXT"),
 		"TYPE" => "STRING",
 		"DEFAULT" => GetMessage("DELIVERY_CALC_ERROR_TEXT_DEFAULT"),
-		"PARENT" => "ERROR_MESSAGE_SETTINGS"
-	);
-	$arTemplateParameters["MESS_PAY_SYSTEM_PAYABLE_ERROR"] =  array(
-		"NAME" => GetMessage("PAY_SYSTEM_PAYABLE_ERROR_TEXT"),
-		"TYPE" => "STRING",
-		"DEFAULT" => GetMessage("PAY_SYSTEM_PAYABLE_ERROR_DEFAULT"),
 		"PARENT" => "ERROR_MESSAGE_SETTINGS"
 	);
 }

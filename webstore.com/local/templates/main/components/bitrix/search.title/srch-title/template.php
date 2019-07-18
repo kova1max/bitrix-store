@@ -26,7 +26,7 @@ if($arParams["SHOW_INPUT"] !== "N"):?>
 
 	<form action="<?echo $arResult["FORM_ACTION"]?>" method="get" class="header_search">
 
-		<input id="<?echo $INPUT_ID?>" type="text" name="q" value="" size="40" maxlength="50" autocomplete="off">
+		<input id="<?echo $INPUT_ID?>" type="text" name="q" value="" size="40" maxlength="50" autocomplete="off" required>
 		<button type="submit" name="s" class="header_search_btn"><i class="svg-glass"></i><span>Поиск</span></button>
 	</form>
 	

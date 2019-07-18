@@ -15,6 +15,17 @@ use \Bitrix\Main\Localization\Loc;
 
 $this->setFrameMode(true);
 
+function isInCookies($i) {
+	$c = json_decode($_COOKIE['USER_FAVORITES']);
+	foreach($c as $e) {
+		if($e == $i){
+			return true;
+		}
+
+	}
+	return false;
+}
+
 // GETTING HIGH LOAD PROPS
 
 $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(18)->fetch();
@@ -63,7 +74,7 @@ $elms = CCatalogProductSet::getList(
 	false
 );
 
-// FAVORITES 
+// FAVORITES
 
 if( $_COOKIE['FAVORITES'] == 1 ){
 	$favParam = "false";
@@ -81,7 +92,17 @@ if( $_REQUEST['ADD2FAVORITES'] == "true" ){
 		)
 	);
 
+	if(!isInCookies($arResult['ORIGINAL_PARAMETERS']['ELEMENT_ID'])) {
+
+		$CCookie = json_decode($_COOKIE['USER_FAVORITES']);
+		$CCookie[] = intval($arResult['ORIGINAL_PARAMETERS']['ELEMENT_ID']);
+		$CCookie = json_encode($CCookie);
+		setcookie('USER_FAVORITES', $CCookie);
+		
+	};
+
 	header("Location: " . $_SERVER['REDIRECT_SCRIPT_URI']);
+
 } 
 
 if( $_REQUEST['ADD2FAVORITES'] == "false" ){
@@ -92,6 +113,8 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 		array(
 			"FAVORITES" => $arResult['PROPERTIES']['FAVORITES']['VALUE']-1
 		)
+
+		
 	);
 
 	header("Location: " . $_SERVER['REDIRECT_SCRIPT_URI']);
@@ -175,7 +198,11 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 					<!-- WISH LIST -->
 					<div class="cart_info_wishlist">
-						<i class="svg-heart"></i><span><?= $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] ?> людей добавили <a href="#">в избранное</a></span>
+						<i class="svg-heart"></i>
+						<span>
+							<?= $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] ?> людей добавили 
+							<a class="fancymodal2" data-src="/include/favorites.php" data-fancybox="" data-type="ajax">в избранное</a>
+						</span>
 					</div>
 
 				</div>
@@ -212,8 +239,8 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 						<a href="<?= $arResult['OFFERS'][0]['ADD_URL'] ?>" class="btn inbasket">
 							<i class="svg-basket"></i>В корзину</a>
+						<a class="fancymodal2 btn_more" data-src="/include/oneclick.php" data-fancybox="" data-type="ajax">Купить в 1 клик</a>
 
-						<a href="#modal_5" class="fancymodal btn_more">Купить в 1 клик</a>
 					</div>
 
 					<!-- RIGHT LINKS -->

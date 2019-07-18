@@ -13,7 +13,7 @@
 
 	<input type="hidden" name="ajax" id="ajax" value="y" />
 
-	<div class="filter_head">Матрасы <a href="#"><span class="i svg-next"></span></a></div>
+	<div class="filter_head">Фильтр <a href="#"><span class="i svg-next"></span></a></div>
 
 	<? foreach ($arResult["ITEMS"] as $key => $arItem) : ?>
 

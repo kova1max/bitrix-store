@@ -35,7 +35,7 @@ else {
 
 <?if($_REQUEST['use_ajax'] == "y") {
 	 $APPLICATION->RestartBuffer();?>
-	 <div id="modal_3" class="modal" style="display: block;">
+	 <div id="modal_3" class="modal">
 <?}?>
 
 	<!-- FIXME: Неправильная обрабока формы в modal (onsubmit) -->

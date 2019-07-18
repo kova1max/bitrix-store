@@ -24,8 +24,7 @@ $('.fancymodal2').on('click', function(event) {
 
     $.fancybox({
         padding: 0,
-        maxWidth: 930,
-        width: '99%',
+        autoSize: true,
         type: 'ajax',
         'closeBtn': false,
         'href': $(this).data('src'),
@@ -111,9 +110,13 @@ $(function() {
     $('.favorites').on('click', function(){
 
         if($.cookie('FAVORITES') != 1){
+
             $.cookie('FAVORITES', 1);
+
         } else {
+
             $.cookie('FAVORITES', 0);
+
         }
 
         location.reload();
