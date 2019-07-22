@@ -2,6 +2,44 @@
 	if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 	$this->setFrameMode(true);
 
+	
+	$arSort = array(
+
+		0 => array(
+			'name' => 'По имени (возр.)',
+			'sort' => 'name',
+			'method' => 'asc',
+			'selected'=>true
+		),
+
+		1 => array(
+			'name' => 'По имени (спад.)',
+			'sort' => 'name',
+			'method' => 'desc'
+		),
+
+		2 => array(
+			'name' => 'По дате создания (возр.)',
+			'sort' => 'timestamp_x',
+			'method' => 'asc'
+		),
+
+		3 => array(
+			'name' => 'По дате создания (спад.)',
+			'sort' => 'timestamp_x',
+			'method' => 'desc'
+		),
+
+	);
+
+
+	foreach($arSort as &$sort_method) {
+		if($sort_method['sort']==$_REQUEST['sort'] && $sort_method['method']==$_REQUEST['method']) {
+			unset($sort_method[0]['selected']);
+			$sort_method['selected']='true';
+		}
+	}
+
 	if($arParams['INCLUDE_TEMPLATE'] !== false) { 
 ?>
 
@@ -96,11 +134,16 @@
 				<input class="bx_filter_search_reset clearfltr" type="submit" id="del_filter" name="del_filter" value="Очистить поиск" />
 			</div>
 			<div class="catalog_sort">
-				Сортировать:
-				<select class="select">
-					<option value="">По рейтингу</option>
-					<option value="">По имени</option>
-					<option value="">По популярности</option>
+				<select class="select select_sort_c">
+					<? foreach($arSort as $arSortItem) { ?>
+						<?
+							$url = $APPLICATION->GetCurPageParam(
+								'sort=' . $arSortItem['sort'] . '&method=' . $arSortItem['method'] . '&q=' . $arParams['QUERY_NAME'],
+								array('sort', 'method')
+							);
+						?>
+						<option <?if($arSortItem['selected']=='true') {?> selected <?}?> data-url="<?=$url?>" name="<?=$arSortItem['sort']?>" value="<?=$arSortItem['method']?>"><?=$arSortItem['name']?></option>
+					<? } ?>
 				</select>
 			</div>
 

@@ -90,7 +90,6 @@
 
 <div class="container">
 	<div class="catalog">
-
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:catalog.smart.filter",
 		".custom_srchfilter",
@@ -131,10 +130,13 @@
 	Array(
 		'HIDE_ICONS' => 'Y'
 	)
-	);?>
+	);
+	?>
 
 	<div class="catalog_content">
-
+		<?
+		$sectionID = $_REQUEST['section'];
+		?>
 		<?$APPLICATION->IncludeComponent(
 			"bitrix:catalog.section",
 			"search_section",
@@ -181,8 +183,8 @@
 				"ENLARGE_PROP" => isset($arParams["LIST_ENLARGE_PROP"])?$arParams["LIST_ENLARGE_PROP"]:"",
 				"FILE_404" => $arParams["FILE_404"],
 				"FILTER_NAME" => "arrFilter",
-				"HIDE_NOT_AVAILABLE" => "Y",
-				"HIDE_NOT_AVAILABLE_OFFERS" => "Y",
+				"HIDE_NOT_AVAILABLE" => "N",
+				"HIDE_NOT_AVAILABLE_OFFERS" => "N",
 				"IBLOCK_ID" => "14",
 				"IBLOCK_TYPE" => "catalog",
 				"INCLUDE_SUBSECTIONS" => "Y",

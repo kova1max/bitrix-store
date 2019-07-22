@@ -88,24 +88,25 @@ if ($obCache->InitCache('600', $cache_id, $cache_path)) {
 					global $sub_menu;
 
 					foreach ($sub_menu as $key => $arItem) {
-						
-						$temp[$key] = array(
-							'NAME' => $arItem['NAME'],
-							'DEPTH_LEVEL' => count($arItem['VALUES']) > 0 ? 2 : 1
-						);
-					
-						foreach ($arItem['VALUES'] as $arLabel) {
-							$temp[$key]['VALUES'][] = array(
-								'NAME' => $arLabel['VALUE'],
-								'LINK' => '/catalog/' . $ob['ID'] . '/filter/'. strtolower($arItem['CODE']) .'-is-'.$arLabel['URL_ID'].'/apply/'
-							);
-						};
 
+						if($arItem['CODE'] != "SIZE"){
+						
+							$temp[$key] = array(
+								'ID' => $ob['ID'],
+								'NAME' => $arItem['NAME'],
+								'DEPTH_LEVEL' => count($arItem['VALUES']) > 0 ? 2 : 1
+							);
+						
+							foreach ($arItem['VALUES'] as $arLabel) {
+								$temp[$key]['VALUES'][] = array(
+									'NAME' => $arLabel['VALUE'],
+									'LINK' => '/catalog/' . $ob['ID'] . '/filter/'. strtolower($arItem['CODE']) .'-is-'.$arLabel['URL_ID'].'/apply/'
+								);
+							};
+
+						}
 
 					};
-
-					//$url = parse_url($ob['SECTION_PAGE_URL'])['query'];
-					//parse_str($url, $url);
 
 					$res_array[$id_key] = array(
 						0 => $ob['NAME'],

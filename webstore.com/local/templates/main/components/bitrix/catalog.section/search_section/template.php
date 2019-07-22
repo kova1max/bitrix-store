@@ -77,7 +77,7 @@ foreach($arSort as &$sort_method) {
 
 		<? foreach ($arResult["ITEMS"] as $arItem) { ?>
 
-			<? if($arParams['SECT_ID'] == $arItem['IBLOCK_SECTION_ID']) { ?>
+			<? if($arParams['SECT_ID'] == $arItem['IBLOCK_SECTION_ID'] || $arParams['SECT_ID'] == '') { ?>
 
 				<?
 				$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT"));
@@ -89,7 +89,7 @@ foreach($arSort as &$sort_method) {
 					<div class="product_item">
 						<div href="<?= $arItem['DETAIL_PAGE_URL'] ?>" class="product_item_img">
 							<div class="product_item_quick">
-									<a href="<?= $arItem["DETAIL_PAGE_URL"] ?>?use_ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax"  data-src="<?= $arItem["DETAIL_PAGE_URL"] ?>?ajax=y">Быстрый просмотр</a>
+									<a href="<?= $arItem["DETAIL_PAGE_URL"] ?>?use_ajax=y" class="btn btn_blue fancymodal2" data-fancybox data-type="ajax"  data-src="<?= $arItem["DETAIL_PAGE_URL"] ?>?use_ajax=y">Быстрый просмотр</a>
 								</div>
 							<img src="<?= $arItem['PREVIEW_PICTURE']['SRC'] ?>" alt="product img">
 						</div>

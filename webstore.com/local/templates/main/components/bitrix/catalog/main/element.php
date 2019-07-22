@@ -23,10 +23,10 @@ if (isset($arParams['USE_COMMON_SETTINGS_BASKET_POPUP']) && $arParams['USE_COMMO
 	$basketAction = (isset($arParams['DETAIL_ADD_TO_BASKET_ACTION']) ? $arParams['DETAIL_ADD_TO_BASKET_ACTION'] : array());
 }
 $isSidebar = ($arParams['SIDEBAR_DETAIL_SHOW'] == 'Y' && !empty($arParams['SIDEBAR_PATH']));
-?>
 
-<?
-
+if($_REQUEST['action'] == 'list'){
+	LocalRedirect($APPLICATION->GetCurPage());
+}
 // Параметры елемента
 
 $componentElementParams = array(
@@ -457,13 +457,36 @@ Array(
 )
 );?>
 <?$APPLICATION->IncludeComponent(
-	"bitrix:main.feedback",
+	"bitrix:form",
 	"feedback",
 	Array(
-		"EMAIL_TO" => "kova1max99@gmail.com",
-		"EVENT_MESSAGE_ID" => array(0=>"7",),
-		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
-		"REQUIRED_FIELDS" => array(0=>"NAME",1=>"EMAIL",2=>"MESSAGE",),
-		"USE_CAPTCHA" => "Y"
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"CACHE_TIME" => "3600",
+		"CACHE_TYPE" => "A",
+		"CHAIN_ITEM_LINK" => "",
+		"CHAIN_ITEM_TEXT" => "",
+		"COMPONENT_TEMPLATE" => "feedback",
+		"EDIT_ADDITIONAL" => "N",
+		"EDIT_STATUS" => "Y",
+		"IGNORE_CUSTOM_TEMPLATE" => "N",
+		"NOT_SHOW_FILTER" => array(0=>"",1=>"",),
+		"NOT_SHOW_TABLE" => array(0=>"",1=>"",),
+		"RESULT_ID" => $_REQUEST[RESULT_ID],
+		"SEF_MODE" => "N",
+		"SHOW_ADDITIONAL" => "N",
+		"SHOW_ANSWER_VALUE" => "N",
+		"SHOW_EDIT_PAGE" => "Y",
+		"SHOW_LIST_PAGE" => "Y",
+		"SHOW_STATUS" => "Y",
+		"SHOW_VIEW_PAGE" => "Y",
+		"START_PAGE" => "new",
+		"SUCCESS_URL" => "",
+		"USE_EXTENDED_ERRORS" => "N",
+		"VARIABLE_ALIASES" => array("action"=>"action",),
+		"WEB_FORM_ID" => "2"
 	)
 );?>

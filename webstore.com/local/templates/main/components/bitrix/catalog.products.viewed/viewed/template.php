@@ -34,14 +34,14 @@ $this->setFrameMode(true);
 
 					<?if (!empty($arResult['ITEMS']) && !empty($arResult['ITEM_ROWS'])){?>
 
-						<?foreach($arResult['ITEMS'] as $arItem){?>
+						<?foreach($arResult['ITEMS'] as $arItem) {?>
 
 							<? 
-									$price = CCatalogProduct::GetOptimalPrice( $arItem['ID'], 1, array(), "N", array(), false, false );
-									$curr = $price['PRICE']['CURRENCY'];
+								$price = CCatalogProduct::GetOptimalPrice( $arItem['ID'], 1, array(), "N", array(), false, false );
+								$curr = $price['PRICE']['CURRENCY'];
 
-									$days = round(-1*(time() - strtotime($arItem['DATE_CREATE'])) / 216000);
-								?>
+								$days = round(-1*(time() - strtotime($arItem['DATE_CREATE'])) / 216000);
+							?>
 
 							<div class="product_item swiper-slide">
 
@@ -73,6 +73,10 @@ $this->setFrameMode(true);
 
 						<? } ?>
 						
+					<? } else { ?>
+
+						<p>Вы еще не просматривали никакие товары</p>
+
 					<? } ?>
 
 				</div>

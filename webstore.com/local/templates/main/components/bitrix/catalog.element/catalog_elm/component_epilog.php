@@ -179,7 +179,7 @@ while($ob = $res->GetNextElement()) { ?>
 
 							<?foreach($item['DISPLAY_PROPERTIES'] as $property){
 									
-									if(($property['PROPERTY_TYPE'] == "S") && ($property['USER_TYPE'] != "HTML")){?>
+									if(($property['PROPERTY_TYPE'] == "S") && ($property['USER_TYPE'] != "HTML") && (!is_array($property['DISPLAY_VALUE']))){?>
 
 							<div class="cart_characteristics_item">
 								<div class="cart_characteristics_left">

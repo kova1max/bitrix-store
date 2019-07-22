@@ -10,9 +10,7 @@ global	$PARAMS;
 
 				<?foreach($arResult as $arItem) {?>
 
-					<? 
-						unset($arItem['PARAMS']['ITEMS']['BASE']);
-					?>
+					<? unset($arItem['PARAMS']['ITEMS']['BASE']); ?>
 				
 					<li class="menu_item">
 						<a href="<?=$arItem['LINK']?>" class="menu_link">
@@ -22,31 +20,36 @@ global	$PARAMS;
 						</a>
 
 						<?if($arItem['PARAMS']['DEPTH_LEVEL'] > 1) {?>
+
 							<div class="menu_submenu">
 
 								<div class="menu_submenu_left">
+						
 									<?foreach($arItem['PARAMS']['ITEMS'] as $arVal) {?>
-										<div class="menu_submenu_item <?echo count($arVal['VALUES']) > 5 ? 'menu_submenu_item_big' : ''?>">
-											<div class="menu_submenu_title"><?=$arVal['NAME']?></div>
 
-											<?if($arVal['VALUES']) {?>
-												<ul>
-													<?foreach($arVal['VALUES'] as $arValue) {?>
-														<li><a href="<?=$arValue['LINK']?>"><?=$arValue['NAME']?></a></li>
-													<?}?>
-												</ul>
-											<?}?>
-										</div>
+										<?if($arVal['ID'] == $arItem['PARAMS']['ID']) {?>
+									
+											<div class="menu_submenu_item <?echo count($arVal['VALUES']) > 5 ? 'menu_submenu_item_big' : ''?>">
+												<div class="menu_submenu_title"><?=$arVal['NAME']?></div>
+
+												<?if($arVal['VALUES']) {?>
+													<ul>
+														<?foreach($arVal['VALUES'] as $arValue) {?>
+															<li><a href="<?=$arValue['LINK']?>"><?=$arValue['NAME']?></a></li>
+														<?}?>
+													</ul>
+												<?}?>
+
+											</div>
+
+										<?}?>
 									<?}?>
 								</div>
 
-								<!-- BANNER -->
-								<!-- <div class="menu_submenu_right">
-									<a href="#"><img src="<?//=SITE_TEMPLATE_PATH?>/img/menu_baner.jpg" alt=""></a>
-								</div> -->
-
 							</div>
+
 						<?}?>
+
 					</li>
 				
 				<?}?>

@@ -7,10 +7,6 @@ $context = Main\Application::getInstance()->getContext();
 $request = $context->getRequest();
 $server = $context->getServer();
 
-
-// FIXME: Отримати DELIVERY
-$delivery = 100;
-
 if(is_array($arResult['JS_DATA']['COUPON_LIST'])) {
 	$arResult['COUPON_ACTIVE']=end($arResult['JS_DATA']['COUPON_LIST']);
 	$arResult['COUPON_ACTIVE']=$arResult['COUPON_ACTIVE']['COUPON'];
@@ -30,7 +26,6 @@ else {
 <?
 	$this->EndViewTarget();
 }
-
 ?>
 
 <?if($_REQUEST['use_ajax'] == "y") {
@@ -38,7 +33,6 @@ else {
 	 <div id="modal_3" class="modal" style="display: block;">
 <?}?>
 
-	<!-- FIXME: Неправильная обрабока формы в modal (onsubmit) -->
 	<form action="<?= $APPLICATION->GetCurPage(); ?>" method="POST" name="ORDER_FORM" style="display: block;" onsubmit="submitForm(this); return false;">
 	<?if($_REQUEST['use_ajax'] == "y") {?>
 	<div class="modal_title">Корзина<a href="" class="fancybox-close"></a></div>
@@ -80,11 +74,11 @@ else {
 					</div>
 		<?}?>
 
-					<table class="<?echo $_REQUEST['use_ajax'] == " y" ? 'basket_formed_list' : 'order_formed_list' ?>">
+					<table class="<?echo $_REQUEST['use_ajax'] == "y" ? 'basket_formed_list' : 'order_formed_list' ?>">
 
 						<!-- ORDER ITEMS -->
 
-						<?foreach($arResult['JS_DATA']['GRID']['ROWS'] as $arItem){?>
+						<?foreach($arResult['JS_DATA']['GRID']['ROWS'] as $arItem) {?>
 
 						<?if($_REQUEST['use_ajax'] == "y") {?>
 
@@ -100,10 +94,10 @@ else {
 									array()
 								);
 
-								?>
+						?>
 
 						<tr>
-							<td class="basket_dell"><a href="#" class=""><i class="svg-cancel-o"></i></a></td>
+							<td class="basket_dell"><a href="?action=REMOVE_FROM_BASKET&id=<?= $arItem['data']['PRODUCT_ID'] ?>" class=""><i class="svg-cancel-o"></i></a></td>
 							<td class="basket_img">
 								<a href="#"><img src="<?= $arItem['data']['PREVIEW_PICTURE_SRC'] ?>" alt=""></a>
 							</td>
@@ -118,7 +112,7 @@ else {
 
 									<?} else {?>
 
-									<option>No more offers added yet</option>
+									<option>No offers added yet</option>
 
 									<?}?>
 
@@ -155,14 +149,22 @@ else {
 
 					<div class="order_total">
 						<div class="order_total_title">Итого:</div>
-						<div class="order_total_item"><?= count($arResult['JS_DATA']['GRID']['ROWS']) ?> товар(ов) на суму: <strong><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'], 'RUB') ?></strong></div>
+
+						<?
+						$elements = 0;
+						foreach($arResult['JS_DATA']['GRID']['ROWS'] as $arItem)
+							$elements = $elements + $arItem['data']['QUANTITY'];
+
+						?>
+
+						<div class="order_total_item"><?= $elements ?> товар(ов) на суму: <strong><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'], 'UAH') ?></strong></div>
 						<div class="order_total_item">Стоимость доставки:
-							<strong><?= $delivery ?> руб.</strong>
+							<strong class="delivery_price"><?= $arResult['DELIVERY'][2]['PRICE_FORMATED'] ?></strong>
 						</div>
 					</div>
 
 					<div class="order_score">
-						К оплате: <span><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'], 'RUB') ?></span>
+						К оплате: <span><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'] + $arResult['DELIVERY'][2]['PRICE'], 'UAH') ?></span>
 						<button class="btn basket_button">Оформить заказ</button>
 					</div>
 				</div>
@@ -182,6 +184,12 @@ else {
 
 					<div class="order_item">
 						<div class="order_title">2. Доставка</div>
+
+							<select class="select order_delivery" name="DELIVERY_ID">
+								<?foreach($arResult['DELIVERY'] as $arDel) {?>
+									<option data-price="<?=$arDel['PRICE_FORMATED']?>" value="<?= $arDel['ID'] ?>"><?= $arDel['NAME']?></option>
+								<?}?>
+							</select>
 
 						<?foreach($arResult['ORDER_PROP']['USER_PROPS_Y'] as $arProp){?>
 
@@ -225,7 +233,7 @@ else {
 			<a href="/catalog/" class="btn_more">Продолжить покупки</a>
 			<div class="basket_formed_total">
 				Итого <span><?= CurrencyFormat($arResult['BASE_BASKET_INFO']['SUM'], 'RUB') ?></span>
-				<a href="#" class="btn">Оформить заказ</a>
+				<a href="/personal/order/make" class="btn btn_modal_add">Оформить заказ</a>
 			</div>
 		</div>
 

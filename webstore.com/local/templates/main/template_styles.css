@@ -160,6 +160,15 @@ body {
     background: #0c507d;
 }
 
+.basket_formed_list .basket_dell a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #b8b8b8;
+    line-height: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
 .btn_more {
     display: inline-block;
     vertical-align: top;

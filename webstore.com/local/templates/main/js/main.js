@@ -1,3 +1,56 @@
+function OnLoad() {
+
+    $('.select').chosen({
+        disable_search_threshold: 10
+    });
+
+    $('.basket_count_minus').click(function () {
+		var $this = $(this),
+		itemVal = $this.siblings('.basket_count_val'),
+		count = itemVal.val();
+		if(+count > 1) {
+			itemVal.val(--count);
+		}
+	});
+	
+	$('.basket_count_plus').click(function () {
+		var $this = $(this),
+		itemVal = $this.siblings('.basket_count_val'),
+		count = itemVal.val();
+		itemVal.val(++count);
+    });
+
+    $('.select_sort_c').on('change', function(){
+		url = this.selectedOptions[0].dataset.url;
+		window.location.href = url;
+    });
+    
+    $('.btn_modal_add').on('click', function(){
+        $form = $(this.closest('form'));
+        $form.submit();
+    });
+
+    $('.cart_tabs_nav a').click(function (e) {
+		e.preventDefault();
+		var $this= $(this),
+		item = $this.data('tabs'),
+		container = $this.closest('.cart_tabs');
+		$this.addClass('active').siblings().removeClass('active');
+		container.find('.cart_tabs_item[data-tabs="' + item + '"]').addClass('active').siblings().removeClass('active');
+	});
+
+}
+
+$('.order_delivery').on('change', function(){
+    $this = this.selectedOptions[0];
+    console.log($this.dataset.price);
+
+    $('strong.delivery_price')[0].innerHTML = $this.dataset.price;
+});
+
+OnLoad();
+
+
 function submitForm(form, type = false){
 
     $.ajax({
@@ -30,6 +83,7 @@ $('.fancymodal2').on('click', function(event) {
         'href': $(this).data('src'),
         autoHeight: true,
         afterShow: function(current, previous) {
+            OnLoad();
         }
     });
 
@@ -68,6 +122,8 @@ $(document).on('click','.reset_search',function(){
 });
 
 $(function() {
+
+    OnLoad();
 
     if($.cookie('FAVORITES') == 1){
         $('.favorites').find('i').css({color: '#f12f45', border: '2px solid #f12f45'});
@@ -287,12 +343,6 @@ $(function() {
                 $(block_id).append(data);
             }
         });
-    });
-
-
-
-    $('.select').chosen({
-        disable_search_threshold: 10
     });
 
     if ($('div').is('.range')) {

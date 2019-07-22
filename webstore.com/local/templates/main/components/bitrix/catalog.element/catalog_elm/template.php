@@ -183,24 +183,24 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 					<!-- RATING -->
 					<div class="cart_info_rating">
-						<?if($_COOKIE['comments_rating'] > 0):?>
+						<?if($_COOKIE['comments_rating'] > 0) {?>
 						<div class="cart_info_star">
-							<?for($i = 0; $i < $_COOKIE['comments_rating']; $i++):?>
-							<i class="svg-star"></i>
-							<?endfor;?>
-							<?for($i = 0; $i < 5 - $_COOKIE['comments_rating']; $i++):?>
-							<i class="svg-star-o"></i>
-							<?endfor;?>
+							<?for($i = 0; $i < $_COOKIE['comments_rating']; $i++) {?>
+								<i class="svg-star"></i>
+							<?}?>
+							<?for($i = 0; $i < 5 - $_COOKIE['comments_rating']; $i++) {?>
+								<i class="svg-star-o"></i>
+							<?}?>
 						</div>
-						<?endif;?>
-						<a href="#" class="cart_info_reviews"><?= $arResult['PROPERTIES']['BLOG_COMMENTS_CNT']['VALUE'] ?> отзыв(ов)</a>
+						<?}?>
+						<a href="#" class="cart_info_reviews"><?echo $_COOKIE['comments_count'] ? $_COOKIE['comments_count'] : "0"?> отзыв(ов)</a>
 					</div>
 
 					<!-- WISH LIST -->
 					<div class="cart_info_wishlist">
 						<i class="svg-heart"></i>
 						<span>
-							<?= $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] ?> людей добавили 
+							<? echo $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] ? $arResult['DISPLAY_PROPERTIES']['FAVORITES']['VALUE'] : "0" ?> людей добавили 
 							<a class="fancymodal2" data-src="/include/favorites.php" data-fancybox="" data-type="ajax">в избранное</a>
 						</span>
 					</div>
@@ -220,7 +220,10 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 						<? endif; ?>
 
 					</select>
-					<span>Артикул <?= $arResult['PROPERTIES']['CML2_ARTICLE']['VALUE'] ?></span>
+
+					<?if($arResult['PROPERTIES']['CML2_ARTICLE']['VALUE']) {?>
+						<span>Артикул <?= $arResult['PROPERTIES']['CML2_ARTICLE']['VALUE'] ?></span>
+					<?}?>
 				</div>
 
 				<div class="cart_info_bottom">
@@ -239,7 +242,7 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 
 						<a href="<?= $arResult['OFFERS'][0]['ADD_URL'] ?>" class="btn inbasket">
 							<i class="svg-basket"></i>В корзину</a>
-						<a class="fancymodal2 btn_more" data-src="/include/oneclick.php" data-fancybox="" data-type="ajax">Купить в 1 клик</a>
+						<a class="fancymodal2 btn_more" data-src="/include/oneclick.php?id=729" data-fancybox="" data-type="ajax">Купить в 1 клик</a>
 
 					</div>
 
@@ -308,23 +311,23 @@ if( $_REQUEST['ADD2FAVORITES'] == "false" ){
 						<? foreach($set['ITEMS'] as $offer) { ?>
 						<?
 
-										unset($prices);
-										$product = CCatalogProduct::GetByIDEx( $offer['ITEM_ID'], false );
-										$price = CCatalogProduct::GetOptimalPrice($offer['ITEM_ID'], $offer['QUANTITY'], false, "N", false);
-										$outPrice = CurrencyFormat(CCatalogProduct::GetOptimalPrice($set['OWNER_ID'], $offer['QUANTITY'], false, "N", false)['DISCOUNT_PRICE'], 'RUB');
+							unset($prices);
+							$product = CCatalogProduct::GetByIDEx( $offer['ITEM_ID'], false );
+							$price = CCatalogProduct::GetOptimalPrice($offer['ITEM_ID'], $offer['QUANTITY'], false, "N", false);
+							$outPrice = CurrencyFormat(CCatalogProduct::GetOptimalPrice($set['OWNER_ID'], $offer['QUANTITY'], false, "N", false)['DISCOUNT_PRICE'], 'RUB');
 
-										// GETTING CALCULATED PRICE 
-										$price = $price['RESULT_PRICE']['BASE_PRICE'] == $price['RESULT_PRICE']['DISCOUNT_PRICE'] ? $price['RESULT_PRICE']['BASE_PRICE'] : $price['RESULT_PRICE']['DISCOUNT_PRICE'];
-										
-										$product['PREVIEW_PICTURE'] = !$product['PREVIEW_PICTURE'] ? CCatalogProduct::GetByIDEx( $product['PROPERTIES']['CML2_LINK']['VALUE'], true )['PREVIEW_PICTURE'] : 0;
-										$parentID = CCatalogSku::GetProductInfo($offer['ITEM_ID'])['ID'];
-										$prices = array(
-											'OLD_PRICE' => CurrencyFormat($price, 'RUB'),
-											'DISCOUNT_PRICE' => CurrencyFormat($price - ($price * $offer['DISCOUNT_PERCENT'] / 100), 'RUB'),
-											'SALE' => $offer['DISCOUNT_PERCENT']
-										);
+							// GETTING CALCULATED PRICE 
+							$price = $price['RESULT_PRICE']['BASE_PRICE'] == $price['RESULT_PRICE']['DISCOUNT_PRICE'] ? $price['RESULT_PRICE']['BASE_PRICE'] : $price['RESULT_PRICE']['DISCOUNT_PRICE'];
+							
+							$product['PREVIEW_PICTURE'] = !$product['PREVIEW_PICTURE'] ? CCatalogProduct::GetByIDEx( $product['PROPERTIES']['CML2_LINK']['VALUE'], true )['PREVIEW_PICTURE'] : 0;
+							$parentID = CCatalogSku::GetProductInfo($offer['ITEM_ID'])['ID'];
+							$prices = array(
+								'OLD_PRICE' => CurrencyFormat($price, 'RUB'),
+								'DISCOUNT_PRICE' => CurrencyFormat($price - ($price * $offer['DISCOUNT_PERCENT'] / 100), 'RUB'),
+								'SALE' => $offer['DISCOUNT_PERCENT']
+							);
 
-									?>
+						?>
 
 						<div class="cheaper_item">
 							<a href="#" class="cheaper_item_img"><img src="<?= CFile::GetPath($product['PREVIEW_PICTURE']) ?>" alt="PRODUCT IMG"></a>

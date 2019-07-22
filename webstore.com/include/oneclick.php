@@ -1,37 +1,38 @@
-<? 
+<? require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php');
+$APPLICATION->SetTitle(""); 
+global $APPLICATION;
+$APPLICATION->RestartBuffer();
+COption::SetOptionString("catalog", "default_quantity_trace", "N");
 
-   require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php"); 
-
-   // require_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php');
-
-   $APPLICATION->IncludeComponent("bitrix:sale.order.ajax", "one-click-order", array(
-      "PAY_FROM_ACCOUNT" => "Y",
-      "COUNT_DELIVERY_TAX" => "N",
-      "COUNT_DISCOUNT_4_ALL_QUANTITY" => "N",
-      "ONLY_FULL_PAY_FROM_ACCOUNT" => "N",
-      "ALLOW_AUTO_REGISTER" => "Y",
-      "SEND_NEW_USER_NOTIFY" => "Y",
-      "DELIVERY_NO_AJAX" => "Y",
-      "TEMPLATE_LOCATION" => "popup",
-      "PROP_1" => array(
-      ),
-      "PATH_TO_BASKET" => "/personal/cart/",
-      "PATH_TO_PERSONAL" => "/personal/order/",
-      "PATH_TO_PAYMENT" => "/personal/order/payment/",
-      "PATH_TO_ORDER" => "/personal/order/make/",
-      "SET_TITLE" => "Y" ,
-      "SHOW_ACCOUNT_NUMBER" => "Y",
-      "DELIVERY_NO_SESSION" => "Y",
-      "COMPATIBLE_MODE" => "Y",
-      "BASKET_POSITION" => "before",
-      "BASKET_IMAGES_SCALING" => "adaptive",
-      "SERVICES_IMAGES_SCALING" => "adaptive",
-      "USER_CONSENT" => "Y",
-      "USER_CONSENT_ID" => "1",
-      "USER_CONSENT_IS_CHECKED" => "Y",
-      "USER_CONSENT_IS_LOADED" => "Y"
-      ),
-      false
-   );
-   
 ?>
+<div class="modal_5" class="modal hidden_modal">
+   <div class="modal_title">Купить в один клик<a href="" class="fancybox-close"></a></div>
+        
+   <?$APPLICATION->IncludeComponent(
+      "wisesolutions:one.click.buy",
+      "ws",
+      Array(
+         'AJAX_MODE'=>'Y',
+         "IBLOCK_TYPE" => "catalog",
+         "ELEMENT_ID" => intval($_REQUEST['id']),
+         "SEF_FOLDERIX" => "/catalog/",
+         "ORDER_FIELDS" => array("PHONE"),
+         "REQUIRED_ORDER_FIELDS" => array("PHONE"),
+         "DEFAULT_PERSON_TYPE" => "1",
+         "DEFAULT_DELIVERY" => "2",
+         "DEFAULT_PAYMENT" => "3",
+         "DEFAULT_CURRENCY" => "UAH",
+         "BUY_MODE" => "ONE",
+         "PRICE_ID" => "1",
+         "DUPLICATE_LETTER_TO_EMAILS" => array("a", "s"),
+         "INSERT_ELEMENT" => "",
+         "CACHE_TYPE" => "N",
+         "CACHE_TIME" => "864000",
+      ),
+   false
+   );
+   ?>
+
+</div>
+
+<? die(); ?>

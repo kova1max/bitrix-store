@@ -15,6 +15,20 @@ use Bitrix\Main\ModuleManager;
 
 $this->setFrameMode(true);
 
+// СОРТУВАННЯ
+
+if($_GET['sort'] && $_GET['sort'] != " ") {
+	$sortField = $_GET['sort'];
+	if($_GET['method'] && $_GET['method'] != " ") {
+		$sortOrder = $_GET['method'];
+	} else {
+		$sortOrder = "desc";
+	}
+} else {
+	$sortField = "name";
+	$sortOrder = "desc";
+}
+
 if (!isset($arParams['FILTER_VIEW_MODE']) || (string)$arParams['FILTER_VIEW_MODE'] == '')
 	$arParams['FILTER_VIEW_MODE'] = 'VERTICAL';
 $arParams['USE_FILTER'] = (isset($arParams['USE_FILTER']) && $arParams['USE_FILTER'] == 'Y' ? 'Y' : 'N');
@@ -90,22 +104,18 @@ if ($isFilter)
 		$arCurSection = array();
 }
 
-foreach(CIBlockSection::GetByID($arCurSection)->GetNext() as $elm){
-	// FIXME: УБРАТЬ PRINT_R
-	print_r('<pre style="text-align: left;color: red;">');
-	print_r($elm);
-	print_r('</pre>');
-}
 ?>
 
 
 <div class="container">
 	<div class="catalog">
-<?
+		<?
 	$APPLICATION->IncludeComponent(
 		"bitrix:catalog.smart.filter",
 		".custom_smrtfilter",
 		array(
+			"ELEMENT_SORT_FIELD" => $sortField,
+			"ELEMENT_SORT_ORDER" => $sortOrder,
 			"COMPONENT_TEMPLATE" => ".custom_smrtfilter",
 			"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
 			"IBLOCK_ID" => $arParams["IBLOCK_ID"],
@@ -134,20 +144,16 @@ foreach(CIBlockSection::GetByID($arCurSection)->GetNext() as $elm){
 		$component,
 		array('HIDE_ICONS' => 'Y')
 	);
-	?>
 	
-	<?
 	$intSectionID = $APPLICATION->IncludeComponent(
 				"bitrix:catalog.section",
 				"sect_new",
 				array(
+					"ELEMENT_SORT_FIELD" => $sortField,
+					"ELEMENT_SORT_ORDER" => $sortOrder,
 					"COMPONENT_TEMPLATE" => "sect_new",
 					"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
 					"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-					"ELEMENT_SORT_FIELD" => $arParams["ELEMENT_SORT_FIELD"],
-					"ELEMENT_SORT_ORDER" => $arParams["ELEMENT_SORT_ORDER"],
-					"ELEMENT_SORT_FIELD2" => $arParams["ELEMENT_SORT_FIELD2"],
-					"ELEMENT_SORT_ORDER2" => $arParams["ELEMENT_SORT_ORDER2"],
 					"PROPERTY_CODE" => (isset($arParams["LIST_PROPERTY_CODE"]) ? $arParams["LIST_PROPERTY_CODE"] : []),
 					"PROPERTY_CODE_MOBILE" => $arParams["LIST_PROPERTY_CODE_MOBILE"],
 					"META_KEYWORDS" => $arParams["LIST_META_KEYWORDS"],
@@ -202,10 +208,6 @@ foreach(CIBlockSection::GetByID($arCurSection)->GetNext() as $elm){
 					"OFFERS_CART_PROPERTIES" => (isset($arParams["OFFERS_CART_PROPERTIES"]) ? $arParams["OFFERS_CART_PROPERTIES"] : []),
 					"OFFERS_FIELD_CODE" => $arParams["LIST_OFFERS_FIELD_CODE"],
 					"OFFERS_PROPERTY_CODE" => (isset($arParams["LIST_OFFERS_PROPERTY_CODE"]) ? $arParams["LIST_OFFERS_PROPERTY_CODE"] : []),
-					"OFFERS_SORT_FIELD" => $arParams["OFFERS_SORT_FIELD"],
-					"OFFERS_SORT_ORDER" => $arParams["OFFERS_SORT_ORDER"],
-					"OFFERS_SORT_FIELD2" => $arParams["OFFERS_SORT_FIELD2"],
-					"OFFERS_SORT_ORDER2" => $arParams["OFFERS_SORT_ORDER2"],
 					"OFFERS_LIMIT" => (isset($arParams["LIST_OFFERS_LIMIT"]) ? $arParams["LIST_OFFERS_LIMIT"] : 0),
 
 					"SECTION_ID" => $arResult["VARIABLES"]["SECTION_ID"],
@@ -270,7 +272,6 @@ foreach(CIBlockSection::GetByID($arCurSection)->GetNext() as $elm){
 			if($arResult['VARIABLES']['action'] == "ADD_TO_COMPARE_LIST"){
 			 LocalRedirect("/catalog/" . $arResult['VARIABLES']['SECTION_ID'] . "/");
 			}
-			 ?>	
+			?>
 	</div>
 </div>
-

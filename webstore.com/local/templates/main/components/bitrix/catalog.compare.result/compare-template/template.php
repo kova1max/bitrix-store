@@ -29,9 +29,6 @@ foreach($arResult['ITEMS'] as $id => $arItem){
 
 ?>
 
-
-
-
 <div class="comparison clearfix">
 	<div class="container">
 		<div class="comparison_wrapper">

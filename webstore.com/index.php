@@ -1,7 +1,8 @@
 <?
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	$APPLICATION->SetTitle("Главная страница");
-?><?$APPLICATION->IncludeComponent(
+?>
+<?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section.list",
 	"main_filter",
 	Array(
@@ -28,7 +29,7 @@
 <div class="features">
 	<div class="container">
 		<div class="features_list">
- <a href="#" class="features_item"><i class="svg-pieces"></i>Большой ассортимент</a> <a href="#" class="features_item"><i class="svg-cash"></i>Приятные цены</a> <a href="#" class="features_item"><i class="svg-delivery"></i>Удобная доставка</a> <a href="#" class="features_item"><i class="svg-like"></i>Лучшее качество</a>
+			<a href="#" class="features_item"><i class="svg-pieces"></i>Большой ассортимент</a> <a href="#" class="features_item"><i class="svg-cash"></i>Приятные цены</a> <a href="#" class="features_item"><i class="svg-delivery"></i>Удобная доставка</a> <a href="#" class="features_item"><i class="svg-like"></i>Лучшее качество</a>
 		</div>
 	</div>
 </div>
@@ -36,15 +37,14 @@
 	<div class="container container-xs">
 		<div class="product_head">
 			<div class="product_title">
-				 Хит продаж
+				Хит продаж
 			</div>
- <a href="#" class="product_all">Все предложения<i class="svg-arrow"></i></a>
+			<a href="#" class="product_all">Все предложения<i class="svg-arrow"></i></a>
 		</div>
-		 <?$APPLICATION->IncludeComponent(
+		<?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section",
 	"main_section",
 	Array(
-		"PROD_STATUS" => "hit_prodazh",
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
 		"ADD_PROPERTIES_TO_BASKET" => "N",
@@ -141,6 +141,7 @@
 		"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
 		"PRODUCT_ROW_VARIANTS" => $arParams["LIST_PRODUCT_ROW_VARIANTS"],
 		"PRODUCT_SUBSCRIPTION" => $arParams["PRODUCT_SUBSCRIPTION"],
+		"PROD_STATUS" => "hit_prodazh",
 		"PROPERTY_CODE" => (isset($arParams["LIST_PROPERTY_CODE"])?$arParams["LIST_PROPERTY_CODE"]:[]),
 		"PROPERTY_CODE_MOBILE" => $arParams["LIST_PROPERTY_CODE_MOBILE"],
 		"RELATIVE_QUANTITY_FACTOR" => (isset($arParams["RELATIVE_QUANTITY_FACTOR"])?$arParams["RELATIVE_QUANTITY_FACTOR"]:""),
@@ -181,15 +182,14 @@ $component
 	<div class="container container-xs">
 		<div class="product_head">
 			<div class="product_title">
-				 Акционные товары
+				Акционные товары
 			</div>
- <a href="/catalog/36/" class="product_all">Все предложения <i class="svg-arrow"></i></a>
+			<a href="/catalog/36/" class="product_all">Все предложения <i class="svg-arrow"></i></a>
 		</div>
-		 <?$APPLICATION->IncludeComponent(
+		<?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section",
 	"main_section",
 	Array(
-		"PROD_STATUS" => "product_item_discount",
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
 		"ADD_PROPERTIES_TO_BASKET" => "N",
@@ -286,6 +286,7 @@ $component
 		"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
 		"PRODUCT_ROW_VARIANTS" => $arParams["LIST_PRODUCT_ROW_VARIANTS"],
 		"PRODUCT_SUBSCRIPTION" => $arParams["PRODUCT_SUBSCRIPTION"],
+		"PROD_STATUS" => "product_item_discount",
 		"PROPERTY_CODE" => (isset($arParams["LIST_PROPERTY_CODE"])?$arParams["LIST_PROPERTY_CODE"]:[]),
 		"PROPERTY_CODE_MOBILE" => $arParams["LIST_PROPERTY_CODE_MOBILE"],
 		"RELATIVE_QUANTITY_FACTOR" => (isset($arParams["RELATIVE_QUANTITY_FACTOR"])?$arParams["RELATIVE_QUANTITY_FACTOR"]:""),
@@ -326,15 +327,14 @@ $component
 	<div class="container container-xs">
 		<div class="product_head">
 			<div class="product_title">
-				 Новинки
+				Новинки
 			</div>
- <a href="#" class="product_all">Все предложения <i class="svg-arrow"></i></a>
+			<a href="#" class="product_all">Все предложения <i class="svg-arrow"></i></a>
 		</div>
-		 <?$APPLICATION->IncludeComponent(
+		<?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section",
 	"main_section",
 	Array(
-		"PROD_STATUS" => "product_item_new",
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
 		"ADD_PROPERTIES_TO_BASKET" => "N",
@@ -431,6 +431,7 @@ $component
 		"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
 		"PRODUCT_ROW_VARIANTS" => $arParams["LIST_PRODUCT_ROW_VARIANTS"],
 		"PRODUCT_SUBSCRIPTION" => $arParams["PRODUCT_SUBSCRIPTION"],
+		"PROD_STATUS" => "product_item_new",
 		"PROPERTY_CODE" => (isset($arParams["LIST_PROPERTY_CODE"])?$arParams["LIST_PROPERTY_CODE"]:[]),
 		"PROPERTY_CODE_MOBILE" => $arParams["LIST_PROPERTY_CODE_MOBILE"],
 		"RELATIVE_QUANTITY_FACTOR" => (isset($arParams["RELATIVE_QUANTITY_FACTOR"])?$arParams["RELATIVE_QUANTITY_FACTOR"]:""),
@@ -467,17 +468,43 @@ $component
 );?>
 	</div>
 </div>
- <?$APPLICATION->IncludeComponent(
-	"bitrix:main.feedback",
+
+<?$APPLICATION->IncludeComponent(
+	"bitrix:form",
 	"feedback",
 	Array(
-		"EMAIL_TO" => "sale@webstore.com",
-		"EVENT_MESSAGE_ID" => array(),
-		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
-		"REQUIRED_FIELDS" => array(),
-		"USE_CAPTCHA" => "Y"
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"CACHE_TIME" => "3600",
+		"CACHE_TYPE" => "A",
+		"CHAIN_ITEM_LINK" => "",
+		"CHAIN_ITEM_TEXT" => "",
+		"COMPONENT_TEMPLATE" => "feedback",
+		"EDIT_ADDITIONAL" => "N",
+		"EDIT_STATUS" => "Y",
+		"IGNORE_CUSTOM_TEMPLATE" => "N",
+		"NOT_SHOW_FILTER" => array(0=>"",1=>"",),
+		"NOT_SHOW_TABLE" => array(0=>"",1=>"",),
+		"RESULT_ID" => $_REQUEST[RESULT_ID],
+		"SEF_MODE" => "N",
+		"SHOW_ADDITIONAL" => "N",
+		"SHOW_ANSWER_VALUE" => "N",
+		"SHOW_EDIT_PAGE" => "Y",
+		"SHOW_LIST_PAGE" => "Y",
+		"SHOW_STATUS" => "Y",
+		"SHOW_VIEW_PAGE" => "Y",
+		"START_PAGE" => "new",
+		"SUCCESS_URL" => "",
+		"USE_EXTENDED_ERRORS" => "N",
+		"VARIABLE_ALIASES" => array("action"=>"action",),
+		"WEB_FORM_ID" => "2"
 	)
-);?> <?$APPLICATION->IncludeComponent(
+);?>
+
+<?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",
 	"main-list",
 	Array(
@@ -533,7 +560,8 @@ $component
 		"SORT_ORDER2" => "ASC",
 		"STRICT_SECTION_CHECK" => "N"
 	)
-);?> <?$APPLICATION->IncludeComponent(
+);?>
+<?$APPLICATION->IncludeComponent(
 	"bitrix:sender.subscribe",
 	"subscribe",
 	Array(
@@ -559,11 +587,11 @@ $component
 	<div class="container container-xs">
 		<div class="about">
 			<div class="about_title title_under">
-				 О компании
+				О компании
 			</div>
- <a href="#" class="about_img"><img src="/local/templates/main/img/about.jpg" alt=""></a>
+			<a href="#" class="about_img"><img src="/local/templates/main/img/about.jpg" alt=""></a>
 			<div class="about_content">
-				 <?$APPLICATION->IncludeComponent(
+				<?$APPLICATION->IncludeComponent(
 	"bitrix:main.include",
 	"",
 	Array(
@@ -577,31 +605,82 @@ $component
 		</div>
 	</div>
 </div>
-<?$APPLICATION->IncludeComponent(
-	"bitrix:catalog.comments",
-	"last_comments",
-	Array(
-		"BLOG_TITLE" => "Комментарии",
-		"BLOG_URL" => "catalog_comments",
-		"BLOG_USE" => "Y",
-		"CACHE_TIME" => "0",
-		"CACHE_TYPE" => "A",
-		"CHECK_DATES" => "N",
-		"COMMENTS_COUNT" => "5",
-		"ELEMENT_CODE" => "",
-		"ELEMENT_ID" => "1100",
-		"EMAIL_NOTIFY" => "N",
-		"FB_USE" => "N",
-		"IBLOCK_ID" => "14",
-		"IBLOCK_TYPE" => "catalog",
-		"PATH_TO_SMILE" => "/bitrix/images/blog/smile/",
-		"RATING_TYPE" => "standart",
-		"SHOW_DEACTIVATED" => "N",
-		"SHOW_RATING" => "Y",
-		"SHOW_SPAM" => "Y",
-		"TEMPLATE_THEME" => "blue",
-		"URL_TO_COMMENT" => "",
-		"VK_USE" => "N",
-		"WIDTH" => ""
-	)
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+
+
+
+<div class="reviews">
+	<div class="container container-xs">
+		<div class="reviews_title title_under">Последние отзывы</div>
+		<div class="reviews_list">
+			<?
+
+$arBlogCommentParams = array(
+	'SEO_USER' => 'N',
+	'ID' => $arResult['BLOG_DATA']['BLOG_POST_ID'],
+	'BLOG_URL' => $arResult['BLOG_DATA']['BLOG_URL'],
+	"DATE_TIME_FORMAT" => $DB->DateFormatToPhp(FORMAT_DATETIME),
+	"AJAX_MODE" => "Y",
+	"AJAX_OPTION_HISTORY" => "N",
+	"SIMPLE_COMMENT" => "Y",
+	"NOT_USE_COMMENT_TITLE" => "Y",
+	"PATH_TO_POST" => $arResult["URL_TO_COMMENT"],
+	"IBLOCK_ID" => $arResult['ELEMENT']['IBLOCK_ID'],
+	"ELEMENT_ID" => $arResult['ELEMENT']['ID'],
+	"COMMENT_PROPERTY" => array('UF_ADVANTAGES', 'UF_DISADVANTAGES', "UF_BLOG_COMMENT_DOC", "UF_RATING", "UF_COMMENTS_LINK"),
+	"NO_URL_IN_COMMENTS" => "L",
+	"BLOG_TITLE" => "Комментарии",
+	"BLOG_URL" => "catalog_comments",
+	"BLOG_USE" => "Y",
+	"CACHE_TIME" => "0",
+	"CACHE_TYPE" => "A",
+	"CHECK_DATES" => "N",
+	"COMMENTS_COUNT" => "1",
+	"ELEMENT_CODE" => "",
+	"ELEMENT_ID" => 1100,
+	"EMAIL_NOTIFY" => "N",
+	"FB_USE" => "N",
+	"IBLOCK_ID" => "14",
+	"IBLOCK_TYPE" => "catalog",
+	"PATH_TO_SMILE" => "/bitrix/images/blog/smile/",
+	"RATING_TYPE" => "standart",
+	"SHOW_DEACTIVATED" => "N",
+	"SHOW_RATING" => "Y",
+	"SHOW_SPAM" => "Y",
+	"TEMPLATE_THEME" => "blue",
+	"URL_TO_COMMENT" => "",
+	"VK_USE" => "N",
+	"WIDTH" => ""
+);
+
+
+$arOrder = Array(
+	"ID" => "DESC",
+);
+$arFilter = Array(
+	"BLOG_ID"=>'2'
+);
+$arSelectedFields = Array("ID", "BLOG_ID", "POST_ID", "PARENT_ID", "AUTHOR_ID", "AUTHOR_NAME", "AUTHOR_EMAIL", "AUTHOR_IP", "AUTHOR_IP1", "TITLE", "POST_TEXT", "DATE_CREATE");
+
+
+CModule::IncludeModule('blog');
+$dbComment = CBlogComment::GetList($arOrder, $arFilter, false, array('nTopCount'=>3), $arSelectedFields);
+while ($arComment = $dbComment->Fetch())
+{
+	$arBlogCommentParams['ID']=$arComment['POST_ID'];
+	$arBlogCommentParams['BLOG_ID']=$arComment['BLOG_ID'];
+
+	$APPLICATION->IncludeComponent(
+		'bitrix:blog.post.comment',
+		'adapt_in_main',
+		$arBlogCommentParams,
+		false,
+		array('HIDE_ICONS' => 'Y')
+	);
+}
+?>
+		</div>
+	</div>
+</div>
+
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

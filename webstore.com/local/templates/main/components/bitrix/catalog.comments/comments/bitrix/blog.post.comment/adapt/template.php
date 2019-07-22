@@ -37,6 +37,8 @@ $rat = array();
 		<input type="hidden" name="ENTITY_ID" value="<?= $elementId; ?>">
 		<input type="hidden" name="ENTITY_TYPE" value="BG">
 
+		<input type="hidden" name="ADD_NEW_COMMENT" value="y">
+
 		<div class="show_comments__wrap">
 			<div class="review_head">Добавить отзыв</div>
 			<div class="review_content">
@@ -44,6 +46,7 @@ $rat = array();
 			<?
 				$eventHandlerID = false;
 				$eventHandlerID = AddEventHandler('main', 'system.field.edit.file', array('CBlogTools', 'blogUFfileEdit'));
+
 				foreach($arResult["COMMENT_PROPERTIES"]["DATA"] as $FIELD_NAME => $arPostField){
 			?>
 					<div class="c-fields" id="blog-comment-user-fields-<?= $FIELD_NAME ?>"><?= ($FIELD_NAME == CBlogComment::UF_NAME ? "" : $arPostField["EDIT_FORM_LABEL"] . ":") ?>
@@ -156,91 +159,107 @@ $rat = array();
 
 
 	<!-- COMMENTS -->
-	<?foreach($arResult['CommentsResult'][0] as $arItem):?>
 
-	<? 
-		$date = DateTime::createFromFormat('d.m.Y H:i:s', $arItem['DATE_CREATE'])->format('d.m.Y'); 
-		$adv = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_ADVANTAGES']['ENTITY_VALUE_ID'], "UF_ADVANTAGES");
-		$dis = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_DISADVANTAGES']['ENTITY_VALUE_ID'], "UF_DISADVANTAGES");
-		$link = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_COMMENTS_LINK']['ENTITY_VALUE_ID'], "UF_COMMENTS_LINK");
-		$file = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_DISADVANTAGES']['ENTITY_VALUE_ID'], "UF_BLOG_COMMENT_DOC");
-		$rating = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_DISADVANTAGES']['ENTITY_VALUE_ID'], "UF_RATING");
+	<?if($arResult['CommentsResult'][0]) {?>
 
-		$rat[] = $rating;
-		setcookie('comments_count', count($arResult['CommentsResult'][0]));
-	?>
+		<?foreach($arResult['CommentsResult'] as $arcategory) {
+			foreach($arcategory as $arItem) {
+			?>
 
-	<div class="comments_item">
-		<div class="comments_head">
+			<? 
+				$date = DateTime::createFromFormat('d.m.Y H:i:s', $arItem['DATE_CREATE'])->format('d.m.Y'); 
+				$adv = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_ADVANTAGES']['ENTITY_VALUE_ID'], "UF_ADVANTAGES");
+				$dis = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_DISADVANTAGES']['ENTITY_VALUE_ID'], "UF_DISADVANTAGES");
+				$link = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_COMMENTS_LINK']['ENTITY_VALUE_ID'], "UF_COMMENTS_LINK");
+				$file = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_DISADVANTAGES']['ENTITY_VALUE_ID'], "UF_BLOG_COMMENT_DOC");
+				$rating = GetUserField("BLOG_COMMENT", $arItem['COMMENT_PROPERTIES']['DATA']['UF_DISADVANTAGES']['ENTITY_VALUE_ID'], "UF_RATING");
 
-			<span class="time"><?= $date ?></span>
-			<h3><?= $arItem['AuthorName'] ?></h3>
+				$rat[] = $rating;
+				setcookie('comments_count', count($arResult['CommentsResult'][0]));
+			?>
 
-			<?if($rating > 0):?>
-			<div class="cart_info_star">
-				<?for($i = 0; $i < $rating; $i++):?>
-				<i class="svg-star"></i>
-				<?endfor;?>
-				<?for($i = 0; $i < 5 - $rating; $i++):?>
-				<i class="svg-star-o"></i>
-				<?endfor;?>
-			</div>
-			<?endif;?>
+			<div class="comments_item">
+				<div class="comments_head">
 
-		</div>
+					<span class="time"><?= $date ?></span>
+					<h3><?= $arItem['AuthorName'] ?></h3>
 
-		<div class="comments_body">
-			<p><?= $arItem['POST_TEXT'] ?></p>
-
-			<div class="rating">
-				<?if($adv):?>
-				<p><strong>Достоинства:</strong> <?= $adv ?></p>
-				<?endif;?>
-				<?if($dis):?>
-				<p><strong>Недостатки:</strong> <?= $dis ?></p>
-				<?endif;?>
-			</div>
-
-
-			<?if($link):?>
-			<div class="comments_video">
-				<div class="comments_video__item">
-					<iframe class="img-responsive" src="<?= $link ?>" frameborder="0" allowfullscreen></iframe>
-					<div class="links">
-						<a href="<?= $link ?>" class="video"></a>
+					<?if($rating > 0):?>
+					<div class="cart_info_star">
+						<?for($i = 0; $i < $rating; $i++):?>
+						<i class="svg-star"></i>
+						<?endfor;?>
+						<?for($i = 0; $i < 5 - $rating; $i++):?>
+						<i class="svg-star-o"></i>
+						<?endfor;?>
 					</div>
+					<?endif;?>
+
+				</div>
+
+				<div class="comments_body">
+					<p><?= $arItem['POST_TEXT'] ?></p>
+
+					<div class="rating">
+						<?if($adv):?>
+						<p><strong>Достоинства:</strong> <?= $adv ?></p>
+						<?endif;?>
+						<?if($dis):?>
+						<p><strong>Недостатки:</strong> <?= $dis ?></p>
+						<?endif;?>
+					</div>
+
+
+					<?if($link):?>
+					<div class="comments_video">
+						<div class="comments_video__item">
+							<iframe class="img-responsive" src="<?= $link ?>" frameborder="0" allowfullscreen></iframe>
+							<div class="links">
+								<a href="<?= $link ?>" class="video"></a>
+							</div>
+						</div>
+					</div>
+					<?endif;?>
+
+					<?if($file):?>
+					<div class="comments_foto">
+						<?foreach($file as $i) {?>
+							<a href="<?= CFile::GetPath($i) ?>" data-fancybox-group="gallery2" class="certificates_item fancybox"><img src="<?= CFile::GetPath($i) ?>" alt=""></a>
+						<?}?>
+					</div>
+					<?endif;?>
+
+					<!-- DOESN'T WORK -->
+					<div class="likes">
+						<a href=""><span class="icons-like"></span></a>
+						<a href=""><span class="icons-dislike"></span></a>
+					</div>
+					<div class="ansver">
+						<span class="icons-arrowleft"></span><a href="#">Ответить</a>
+					</div>
+
 				</div>
 			</div>
-			<?endif;?>
+		<?} }
+		
+		if($_REQUEST['act']=='add') {
+		?>
+		<script type="text/javascript">
+			window.location.reload();
+		</script>
+		<?
+		?>
+	<?}} else {?>
 
-			<?if($file):?>
-			<div class="comments_foto">
-				<?foreach($file as $i):?>
-				<a href="<?= CFile::GetPath($i) ?>" data-fancybox-group="gallery2" class="certificates_item fancybox"><img src="<?= CFile::GetPath($i) ?>" alt=""></a>
-				<?endforeach;?>
-			</div>
-			<?endif;?>
+		<p>К данному товару еще не было добавлено комментариев.</p>
+	
+	<?}?>
 
-			<!-- DOESN'T WORK -->
-			<div class="likes">
-				<a href=""><span class="icons-like"></span></a>
-				<a href=""><span class="icons-dislike"></span></a>
-			</div>
-			<div class="ansver">
-				<span class="icons-arrowleft"></span><a href="#">Ответить</a>
-			</div>
+		<?
+			for($i = 0; $i < count($rat); $i++ ){
+				$result += $rat[$i];
+			}
+			$cr = $result / count($rat);
 
-		</div>
-	</div>
-	<?endforeach;?>
-
-	<?
-
-
-	for($i = 0; $i < count($rat); $i++ ){
-		$result += $rat[$i];
-	}
-	$cr = $result / count($rat);
-
-	setcookie('comments_rating', round($cr));
-	?>
+			setcookie('comments_rating', round($cr));
+		?>

@@ -12,6 +12,8 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 
+LocalRedirect('/');
+
 $this->setFrameMode(true);
 
 $sectionListParams = array(

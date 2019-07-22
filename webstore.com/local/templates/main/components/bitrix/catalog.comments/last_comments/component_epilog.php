@@ -64,7 +64,7 @@ if ($ajaxMode)
 
 	$APPLICATION->IncludeComponent(
 		'bitrix:blog.post.comment',
-		'adapt',
+		'adapt_in_main',
 		$arBlogCommentParams,
 		$this,
 		array('HIDE_ICONS' => 'Y')
