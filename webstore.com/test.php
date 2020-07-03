@@ -5,7 +5,7 @@
 
 <?
 echo '<pre>';
-print_r('SOME TEXT');
+print_r('SOME TEXT EDITED');
 echo '<pre>';
 ?>
 
