@@ -5,4 +5,6 @@ $arDirProperties = array(
    "keywords" => "женская одежда, мужская одежда, спортивная одежда, тапочки",
    "robots" => "index, follow"
 );
+
+$someNewVariable = 123;
 ?>
